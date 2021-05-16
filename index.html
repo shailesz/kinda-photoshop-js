@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Photoshop</title>
+  </head>
+  <body>
+    <nav>
+      <!-- TODO: add container for menu and fix margins -->
+      <div class="menu-bar clearfix">
+        <div class="program-name-container fl">
+          <span class="program-name"> Photoshop CC JS </span>
+        </div>
+        <div class="menu-bar-options-container fl">
+          <ul class="menu-bar-options-list lsn">
+            <li id="menu-bar-file">File</li>
+            <li>Edit</li>
+            <li>Image</li>
+            <li>Layer</li>
+            <li>Type</li>
+            <li>Select</li>
+            <li>Filter</li>
+            <li>3D</li>
+            <li>View</li>
+            <li>Window</li>
+            <li>Help</li>
+          </ul>
+        </div>
+      </div>
+      <div class="properties-bar">property huncha yeta</div>
+    </nav>
+    <!-- TODO: sidebar items should be boxes with small border radius -->
+    <section class="body clearfix">
+      <div class="canvas-holder-container fl">
+        <div class="canvas-holder">
+          <div class="canvas">
+            <!-- canvas gets appended here -->
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-container fr">
+        <div class="sidebar">
+          <div class="color-selector">
+            <div class="color-selector-title">Color</div>
+            <div class="color-selector-gradient"></div>
+            <div class="color-selector-slider-container clearfix">
+              <div class="selected-colors fl">
+                <div class="primary-selected-color"></div>
+                <div class="secondary-selected-color"></div>
+              </div>
+              <div class="color-selector-slider fl"></div>
+            </div>
+          </div>
+          <div class="layers">
+            <div class="layers-title">Layers</div>
+            <div class="layers-list-container">
+              <ul id="layers-list" class="lsn">
+                <li>Layer 0</li>
+                <li>Layer 1</li>
+                <li>Layer 2</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="./js/photoshop.js"></script>
+  </body>
+</html>

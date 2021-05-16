@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+* {
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
+
+.lsn{
+    list-style: none;
+}
