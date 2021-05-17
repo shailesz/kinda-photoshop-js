@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/layout.css" />
-    <link rel="stylesheet" href="./css/style.css" />
     <title>Photoshop</title>
   </head>
   <body>
@@ -18,7 +19,21 @@
         </div>
         <div class="menu-bar-options-container fl">
           <ul class="menu-bar-options-list lsn">
-            <li id="menu-bar-file">File</li>
+            <li id="file-button" class="menu-bar-option">File</li>
+            <ul id="file-button-dropdown" class="menu-option-dropdown lsn">
+              <li id="file-button-dropdown-new">New</li>
+              <li id="file-button-dropdown-open">
+                <label for="file-open-input">Open</label>
+                <input
+                  type="file"
+                  name="file"
+                  id="file-open-input"
+                  accept="image/png,image/jpeg"
+                />
+              </li>
+              <li>Save</li>
+              <li>Exit</li>
+            </ul>
             <li>Edit</li>
             <li>Image</li>
             <li>Layer</li>
