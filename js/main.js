@@ -1,6 +1,26 @@
-import Canvas from "./model/canvas.js";
+import LayerManager from "./model/layer_manager.js";
 
-var layer = new Canvas();
+var layerManager = new LayerManager("./images/2.png");
+
+newLayerButton.addEventListener("click", () => {
+  layerManager.addLayer();
+});
+
+// var startLayerWidth = 0;
+// var startLayerHeight = 0;
+
+// var startLayer = new Canvas("./images/2.png", false);
+
+// myLayers.push(startLayer);
+
+// console.log(startLayer.calculatedWidth, startLayer.calculatedHeight);
+
+// startLayerWidth = startLayer.getCanvasResolution()[0];
+// startLayerHeight = startLayer.getCanvasResolution()[1];
+
+// console.log(startLayerWidth, startLayerHeight);
+
+// var another_layer = new Canvas();
 
 // ui ko components here
 
@@ -44,4 +64,3 @@ var layer = new Canvas();
 //   },
 //   false
 // );
-

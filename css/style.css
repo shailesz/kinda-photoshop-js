@@ -108,6 +108,10 @@ section {
     margin-top: 2.5%;
 }
 
+.canvas>canvas {
+    position: absolute;
+}
+
 .sidebar-container {
     background: #535353;
     height: 100%;

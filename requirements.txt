@@ -1,0 +1,42 @@
+Photoshop clone
+
+Basic requirements:
+    Similar ui ✅
+
+    Open images ✅
+
+    Insert images
+    
+    Layers
+        add layer 🚀
+        delete layer
+        reposition layer
+
+    Basic tools
+        Move tool
+        Hand tool
+        Brush tool
+        Eyedropper tool
+        Selection tools
+        Text tool
+        Eraser tool
+
+    Basic image manipulation
+        Rotate
+        Resize
+
+    Export options
+    
+
+Extra features:
+    Adjustment tools for images
+
+    Dodge tool
+    Burrn tool
+    Blur tool
+
+    Basic image manipulation:
+        Blur
+
+    layer
+        enable/disable

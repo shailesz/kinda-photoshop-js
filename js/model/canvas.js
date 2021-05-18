@@ -1,14 +1,26 @@
+/*
+ * creates a layer
+ * @params src - the source of the image to be drawn
+ * @params isEmptyLayer - bool value to denote if it is a image layer or an empty layer
+ * @params startLayerWidth - Number value of width of canvas of the initial image aka background
+ * @params startLayerHeight - Number value of the canvas of the initial image aka background
+ */
+
 export default class Canvas {
-  constructor() {
+  constructor(
+    src,
+    isEmptyLayer = true,
+    startLayerWidth = null,
+    startLayerHeight = null
+  ) {
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d");
-    this.image = new Image();
 
-    // setting onload for image of this object
-    this.image.onload = () => {
-      var canvasDiv = document.querySelector(".canvas");
-      var canvasDivHolder = document.querySelector(".canvas-holder");
-      
+    // checking if the initialized canvas is empty or a image layer
+    if (!isEmptyLayer) {
+      this.image = new Image();
+      this.image.src = src;
+
       // taking image ko height width
       var imageWidth = this.image.width;
       var imageHeight = this.image.height;
@@ -17,44 +29,45 @@ export default class Canvas {
       var imageRatio = imageWidth / imageHeight;
 
       // finding canvas ko resolution to set
-      var calculatedWidth = (canvasDivHolder.clientWidth * 0.9).toFixed(0);
-      var calculatedHeight = (calculatedWidth / imageRatio).toFixed(0);
+      this.calculatedWidth = (canvasDivHolder.clientWidth * 0.9).toFixed(0);
+      this.calculatedHeight = (this.calculatedWidth / imageRatio).toFixed(0);
+
+      // setting up this canvas
+      this.canvas.width = this.calculatedWidth;
+      this.canvas.height = this.calculatedHeight;
 
       // TODO: yeslai photoshop.js bata handle garne only once when creating first layer
       // setting canvas-div ko widthharu
-      canvasDiv.setAttribute(
-        "style",
-        `height: ${calculatedHeight}px; width: ${calculatedWidth}px;`
-      );
+      if (!isEmptyLayer) {
+        canvasDiv.setAttribute(
+          "style",
+          `height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`
+        );
+        // console.log(`height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`);
+      }
 
-      // setting up this canvas
-      this.canvas.width = calculatedWidth;
-      this.canvas.height = calculatedHeight;
-
-      console.log("image ko: ", this.image.width, this.image.height);
-      console.log("calculated ko: ", calculatedWidth, calculatedHeight);
-      console.log("canvas ko:", this.canvas.width, this.canvas.height);
-
-      this.ctx.drawImage(
-        this.image,
-        0,
-        0,
-        this.canvas.width,
-        this.canvas.height
-      );
-
-      canvasDiv.appendChild(this.canvas);
-    };
-
-    this.setup();
+      // setting onload for image of this object
+      this.image.onload = () => {
+        // draw image on canvas
+        this.ctx.drawImage(
+          this.image,
+          0,
+          0,
+          this.canvas.width,
+          this.canvas.height
+        );
+      };
+    } else {
+      // create transparent canvas
+      this.canvas.width = startLayerWidth;
+      this.canvas.height = startLayerHeight;
+      this.ctx.fillStyle = "transparent";
+      this.ctx.fillRect(0, 0, startLayerWidth, startLayerHeight);
+    }
+    canvasDiv.appendChild(this.canvas);
   }
 
-  setup() {
-    this.image.src = "./images/2.png";
-    this.update();
-  }
-
-  update() {
-    requestAnimationFrame(() => this.update());
+  getCanvasResolution() {
+    return [this.canvas.width, this.canvas.height];
   }
 }
