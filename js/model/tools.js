@@ -29,20 +29,19 @@ export class MoveTool {
       if (!this.isToolActive) {
         return;
       }
-        // mouse kati move bhayo
-        var dx = e.clientX - x;
-        var dy = e.clientY - y;
+      // mouse kati move bhayo
+      var dx = e.clientX - x;
+      var dy = e.clientY - y;
 
-        // reposition
-        selectedLayer.canvas.style.top =
-          selectedLayer.canvas.offsetTop + dy + "px";
-        selectedLayer.canvas.style.left =
-          selectedLayer.canvas.offsetLeft + dx + "px";
+      // reposition
+      selectedLayer.canvas.style.top =
+        selectedLayer.canvas.offsetTop + dy + "px";
+      selectedLayer.canvas.style.left =
+        selectedLayer.canvas.offsetLeft + dx + "px";
 
-        // reassign mouse ko position
-        x = e.clientX;
-        y = e.clientY;
-      
+      // reassign mouse ko position
+      x = e.clientX;
+      y = e.clientY;
     };
 
     // event listener for when mouce moves
@@ -125,5 +124,17 @@ export class EraserTool {
     selectedLayer.canvas.addEventListener("mousedown", startErase);
     selectedLayer.canvas.addEventListener("mouseup", endErase);
     selectedLayer.canvas.addEventListener("mousemove", erase);
+  }
+}
+
+export class EyedropperTool {
+  constructor() {
+    this.isToolActive = false;
+  }
+
+  eyedrop(artboard) {
+    artboard.addEventListener("mousemove", (e) => {
+      console.log("hello");
+    });
   }
 }
