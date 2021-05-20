@@ -26,11 +26,13 @@ export default class Canvas {
       var imageHeight = this.image.height;
 
       // finding ratio
-      var imageRatio = imageWidth / imageHeight;
+      this.imageRatio = imageWidth / imageHeight;
 
       // finding canvas ko resolution to set
       this.calculatedWidth = (canvasDivHolder.clientWidth * 0.9).toFixed(0);
-      this.calculatedHeight = (this.calculatedWidth / imageRatio).toFixed(0);
+      this.calculatedHeight = (this.calculatedWidth / this.imageRatio).toFixed(
+        0
+      );
 
       // setting up this canvas
       this.canvas.width = this.calculatedWidth;
@@ -65,6 +67,7 @@ export default class Canvas {
       this.ctx.fillRect(0, 0, startLayerWidth, startLayerHeight);
     }
     canvasDiv.appendChild(this.canvas);
+    
   }
 
   getCanvasResolution() {
