@@ -1,10 +1,7 @@
-import LayerManager from "./model/layer_manager.js";
+import { Photoshop } from "./model/photoshop.js";
 
-var layerManager = new LayerManager("./images/2.png");
+new Photoshop();
 
-newLayerButton.addEventListener("click", () => {
-  layerManager.addLayer();
-});
 
 // var startLayerWidth = 0;
 // var startLayerHeight = 0;

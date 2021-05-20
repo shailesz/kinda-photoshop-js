@@ -6,7 +6,7 @@
  * @params startLayerHeight - Number value of the canvas of the initial image aka background
  */
 
-export default class Canvas {
+export class Canvas {
   constructor(
     src,
     isEmptyLayer = true,
