@@ -7,11 +7,13 @@ export class Photoshop {
     this.toolManager = new ToolManager();
 
     // brush tool with white color for now
-    // this.toolManager.brushTool.brush(this.layerManager.selectedLayer);
+    this.toolManager.brushTool.brush(this.layerManager.selectedLayer);
 
     // eraser tool
     // this.toolManager.eraserTool.erase(this.layerManager.selectedLayer);
 
+    // move tool
+    // this.toolManager.moveTool.move(this.layerManager.selectedLayer);
 
     newLayerButton.addEventListener("click", () => {
       this.layerManager.addLayer();

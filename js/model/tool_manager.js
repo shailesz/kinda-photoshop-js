@@ -5,6 +5,7 @@ export class ToolManager {
     this.moveTool = new MoveTool();
     this.brushTool = new BrushTool();
     this.eraserTool = new EraserTool();
-    this.selectedTool = this.eraserTool;
+
+    this.selectedTool = this.moveTool;
   }
 }

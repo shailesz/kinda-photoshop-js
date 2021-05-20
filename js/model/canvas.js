@@ -1,3 +1,10 @@
+class Vector {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
 /*
  * creates a layer
  * @params src - the source of the image to be drawn
@@ -15,6 +22,7 @@ export class Canvas {
   ) {
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.position = new Vector(0, 0);
 
     // checking if the initialized canvas is empty or a image layer
     if (!isEmptyLayer) {
@@ -53,8 +61,8 @@ export class Canvas {
         // draw image on canvas
         this.ctx.drawImage(
           this.image,
-          0,
-          0,
+          this.position.x,
+          this.position.y,
           this.canvas.width,
           this.canvas.height
         );
@@ -64,10 +72,14 @@ export class Canvas {
       this.canvas.width = startLayerWidth;
       this.canvas.height = startLayerHeight;
       this.ctx.fillStyle = "transparent";
-      this.ctx.fillRect(0, 0, startLayerWidth, startLayerHeight);
+      this.ctx.fillRect(
+        this.position.x,
+        this.position.y,
+        startLayerWidth,
+        startLayerHeight
+      );
     }
     canvasDiv.appendChild(this.canvas);
-    
   }
 
   getCanvasResolution() {

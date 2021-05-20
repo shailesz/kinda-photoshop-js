@@ -1,0 +1,30 @@
+
+    // var imgData = this.ctx.getImageData(
+    //   this.position.x,
+    //   this.position.y,
+    //   this.canvas.width,
+    //   this.canvas.height
+    // );
+
+    // this.ctx.clearRect(
+    //   this.position.x,
+    //   this.position.y,
+    //   this.canvas.width,
+    //   this.canvas.height
+    // );
+
+    // if (this.position.x > -50 && this.position.x < 1) {
+    //   this.position.x -= 1;
+    //   this.position.y -= 1;
+    // } else{
+    //   this.position.x = 1
+    //   this.position.y = 1
+    // }
+
+    // this.ctx.putImageData(imgData, this.position.x, this.position.y);
+    // this.ctx.translate(this.position.x, this.position.y);
+
+    // this.ctx.save();
+
+    // console.log(this.position.x, this.position.y);
+    // this.ctx.restore();

@@ -1,27 +1,73 @@
 export class MoveTool {
   constructor() {
-    console.log("move banyo");
+    this.isToolActive = false;
+  }
+
+  move(selectedLayer) {
+    var x = 0;
+    var y = 0;
+
+    var startMove = (e) => {
+      this.isToolActive = true;
+      x = e.clientX;
+      y = e.clientY;
+
+      // // attach the listeners here
+      document.addEventListener("mouseup", endMove);
+      document.addEventListener("mousemove", reposition);
+    };
+
+    var endMove = () => {
+      this.isToolActive = false;
+
+      // // remove listeners
+      document.removeEventListeners("mouseup", endMove);
+      document.removeEventListeners("mousemove", reposition);
+    };
+
+    var reposition = (e) => {
+      if (!this.isToolActive) {
+        return;
+      }
+        // mouse kati move bhayo
+        var dx = e.clientX - x;
+        var dy = e.clientY - y;
+
+        // reposition
+        selectedLayer.canvas.style.top =
+          selectedLayer.canvas.offsetTop + dy + "px";
+        selectedLayer.canvas.style.left =
+          selectedLayer.canvas.offsetLeft + dx + "px";
+
+        // reassign mouse ko position
+        x = e.clientX;
+        y = e.clientY;
+      
+    };
+
+    // event listener for when mouce moves
+    selectedLayer.canvas.addEventListener("mousedown", startMove);
   }
 }
 
 export class BrushTool {
   constructor() {
-    this.isBrushActive = false;
+    this.isToolActive = false;
   }
 
   brush(selectedLayer) {
     var startDraw = (e) => {
-      this.isBrushActive = true;
+      this.isToolActive = true;
       draw(e);
     };
 
     var endDraw = () => {
-      this.isBrushActive = false;
+      this.isToolActive = false;
       selectedLayer.ctx.beginPath();
     };
 
     var draw = (e) => {
-      if (!this.isBrushActive) {
+      if (!this.isToolActive) {
         return;
       }
 
@@ -45,27 +91,27 @@ export class BrushTool {
 
 export class EraserTool {
   constructor() {
-    this.isEraserActive = false;
+    this.isToolActive = false;
   }
 
   erase(selectedLayer) {
     var startErase = (e) => {
-      this.isEraserActive = true;
+      this.isToolActive = true;
       erase(e);
     };
 
     var endErase = () => {
-      this.isEraserActive = false;
+      this.isToolActive = false;
       selectedLayer.ctx.beginPath();
     };
 
     var erase = (e) => {
-      if (!this.isEraserActive) {
+      if (!this.isToolActive) {
         return;
       }
 
       // variables here
-      selectedLayer.ctx.globalCompositeOperation = 'destination-out';
+      selectedLayer.ctx.globalCompositeOperation = "destination-out";
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
