@@ -133,8 +133,14 @@ export class EyedropperTool {
   }
 
   eyedrop(artboard) {
+    // TODO: eyedropper functionality 
+    // getimage and getpx methods hune raicha
+    // maybe combine all layers so that can accurately get the color of any layers that the mouse may hover
+    // aaru ma ta single layer linthiyo aba that wont work fam
+    // good luck :)
     artboard.addEventListener("mousemove", (e) => {
       console.log("hello");
+
     });
   }
 }
