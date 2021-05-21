@@ -71,7 +71,7 @@ export class BrushTool {
       }
 
       // variables here
-      selectedLayer.ctx.strokeStyle = "white";
+      selectedLayer.ctx.strokeStyle = "yellow";
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
@@ -138,7 +138,7 @@ export class EyedropperTool {
     // maybe combine all layers so that can accurately get the color of any layers that the mouse may hover
     // aaru ma ta single layer linthiyo aba that wont work fam
     // good luck :)
-    
+
     // artboard.addEventListener("mousemove", (e) => {
     //   console.log("hello");
 

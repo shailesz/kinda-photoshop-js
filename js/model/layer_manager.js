@@ -5,61 +5,49 @@ import { Canvas } from "./canvas.js";
  */
 export class LayerManager {
   constructor(backgroundImageSrc) {
-    this.myLayers = [];
+    this.myLayers = {};
+    this.count = 0;
     this.backgroundLayer = new Canvas(backgroundImageSrc, false);
-
-    // pushing background layer to myLayers
-    this.myLayers.push(this.backgroundLayer);
-
     this.selectedLayer = this.backgroundLayer;
-    this.setup();
+
+    this.addLayer(this.backgroundLayer);
   }
 
   // currently adding transparent layer
   // also pushing it to this.myLayers
-  addLayer() {
-    this.myLayers.push(
-      new Canvas(
-        null,
-        true,
-        this.backgroundLayer.calculatedWidth,
-        this.backgroundLayer.calculatedHeight
-      )
-    );
-  }
+  addLayer(layer = null) {
+    let newLayer = layer
+      ? layer
+      : new Canvas(
+          null,
+          true,
+          this.backgroundLayer.calculatedWidth,
+          this.backgroundLayer.calculatedHeight
+        );
 
-  deleteLayer() {}
+    newLayer.layerName += this.count;
+    this.myLayers[this.count] = newLayer;
 
-  convertToElement(layer) {
-    // append lai yo 
-    // let element = document.createElement("li");
-    // element.innerText = "2";
-    // layersList.appendChild(element);
-    // layerLi = document.querySelectorAll("#layers-list>li");
+    this.selectedLayer = newLayer;
 
-    // insertbefore lai yo
-    // let element2 = document.createElement("li");
-    // element2.innerText = "1";
-    // layersList.insertBefore(element2, layerLi[0]);
-    // layerLi = document.querySelectorAll("#layers-list>li");
+    let layersListLi = document.querySelectorAll("#layers-list>li");
+    let newElement = document.createElement("li");
+    newElement.innerText = newLayer.layerName;
 
+    newElement.addEventListener("click", () => {
+      this.selectedLayer = this.backgroundLayer;
+    });
 
-    // let element = document.createElement("li");
-    // element.innerText = "1";
-    // layersList.appendChild(element);
-    // var layerLi = document.querySelector("#layers-list>li");
-    // element.innerText = layer.layerName;
-    return element;
-  }
-
-  setup() {
-    this.update();
-  }
-
-  update() {
-    for (let layer of this.myLayers) {
-      // layerList.appendChild(this.convertToElement());
+    if (!layersListLi[0]) {
+      layersList.appendChild(newElement);
+    } else {
+      layersList.insertBefore(newElement, layersListLi[0]);
     }
-    requestAnimationFrame(() => this.update());
+
+    this.count += 1;
+  }
+
+  removeLayer() {
+    console.log("remove bhayo yo");
   }
 }
