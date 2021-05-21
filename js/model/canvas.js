@@ -23,6 +23,7 @@ export class Canvas {
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.position = new Vector(0, 0);
+    this.layerName = "layer 0 fam";
 
     // checking if the initialized canvas is empty or a image layer
     if (!isEmptyLayer) {

@@ -56,13 +56,39 @@
           <div class="toolbar">
             <div id="toolbar-title">Toolbar</div>
             <ul class="tools lsn">
-              <li><img class="tools-icon" src="./images/move.svg" alt="move" /></li>
-              <li><img class="tools-icon" src="./images/hand.svg" alt="hand" /></li>
-              <li><img class="tools-icon" src="./images/brush.svg" alt="brush" /></li>
-              <li><img class="tools-icon" src="./images/eraser.svg" alt="eraser" /></li>
-              <li><img class="tools-icon" src="./images/eyedropper.svg" alt="eyedropper" /></li>
-              <li><img class="tools-icon" src="./images/selection.svg" alt="selection" /></li>
-              <li><img class="tools-icon" src="./images/text.svg" alt="text" /></li>
+              <li>
+                <img class="tools-icon" src="./images/move.svg" alt="move" />
+              </li>
+              <li>
+                <img class="tools-icon" src="./images/hand.svg" alt="hand" />
+              </li>
+              <li>
+                <img class="tools-icon" src="./images/brush.svg" alt="brush" />
+              </li>
+              <li>
+                <img
+                  class="tools-icon"
+                  src="./images/eraser.svg"
+                  alt="eraser"
+                />
+              </li>
+              <li>
+                <img
+                  class="tools-icon"
+                  src="./images/eyedropper.svg"
+                  alt="eyedropper"
+                />
+              </li>
+              <li>
+                <img
+                  class="tools-icon"
+                  src="./images/selection.svg"
+                  alt="selection"
+                />
+              </li>
+              <li>
+                <img class="tools-icon" src="./images/text.svg" alt="text" />
+              </li>
             </ul>
           </div>
         </div>
@@ -74,8 +100,6 @@
       </div>
       <div class="sidebar-container fr">
         <div class="sidebar">
-          <button id="add-layer">+</button>
-          <button id="delete-layer">-</button>
           <div class="color-selector">
             <div class="color-selector-title">Color</div>
             <div class="color-selector-gradient"></div>
@@ -84,16 +108,21 @@
                 <div class="primary-selected-color"></div>
                 <div class="secondary-selected-color"></div>
               </div>
-              <div class="color-selector-slider fl"></div>
+              <div class="color-selector-slider fr"></div>
             </div>
           </div>
-          <div class="layers">
+          <div class="layer-manager">
             <div class="layers-title">Layers</div>
             <div class="layers-list-container">
               <ul id="layers-list" class="lsn">
-                <li>Layer 0</li>
-                <li>Layer 1</li>
-                <li>Layer 2</li>
+                
+              </ul>
+            </div>
+
+            <div class="controls-container">
+              <ul class="lsn">
+                <li>+</li>
+                <li>-</li>
               </ul>
             </div>
           </div>

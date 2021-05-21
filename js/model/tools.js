@@ -138,9 +138,10 @@ export class EyedropperTool {
     // maybe combine all layers so that can accurately get the color of any layers that the mouse may hover
     // aaru ma ta single layer linthiyo aba that wont work fam
     // good luck :)
-    artboard.addEventListener("mousemove", (e) => {
-      console.log("hello");
+    
+    // artboard.addEventListener("mousemove", (e) => {
+    //   console.log("hello");
 
-    });
+    // });
   }
 }

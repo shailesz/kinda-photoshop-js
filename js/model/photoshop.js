@@ -3,7 +3,7 @@ import { ToolManager } from "./tool_manager.js";
 
 export class Photoshop {
   constructor() {
-    this.layerManager = new LayerManager("../images/2.png");
+    this.layerManager = new LayerManager("../../images/2.png");
     this.toolManager = new ToolManager();
 
     // brush tool with white color for now

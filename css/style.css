@@ -151,6 +151,11 @@ section {
 
 .sidebar {
     margin-left: 20px;
+    height: 100%;
+}
+
+.color-selector {
+    height: 43%;
 }
 
 .color-selector-title,
@@ -168,19 +173,23 @@ section {
     background: rgb(255, 255, 255);
     background: linear-gradient(to bottom, transparent 0%, #000 100%), linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 227, 255, 1) 100%);
     width: calc(100% + 20px);
-    height: 200px;
+    height: 65%;
 }
 
 .color-selector-slider-container {
     margin-left: -20px;
-    border-bottom: 5px solid #363636;
     margin-right: 20px;
+    height: calc(40% - 40px);
+}
+
+.color-selector-slider {
+    height: 30%;
 }
 
 .selected-colors {
     margin-left: 20px;
     position: relative;
-    padding: 25px 0;
+    padding: 5px 0;
 }
 
 .primary-selected-color {
@@ -190,7 +199,7 @@ section {
     border-radius: 50%;
     background: rgba(0, 227, 255, 1);
     z-index: 1;
-    position: absolute;
+    position: relative;
     top: 12px;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
 
@@ -226,6 +235,20 @@ section {
             rgba(255, 0, 0, 1) 100%);
 }
 
+.layers-title{
+    border-top: 1px solid black;
+}
+
+.layer-manager {
+    height: calc(57% - 35px);
+
+}
+
+.layers-list-container {
+    height: calc(100% - 45px);
+    overflow-y: scroll;
+}
+
 #layers-list>li {
     padding: 12px 0;
     margin-left: -20px;
@@ -241,4 +264,23 @@ section {
     height: 10px;
     background: white;
     border-radius: 50%;
+}
+
+.controls-container {
+    background: #3D3D3D;
+    height: 40px;
+    position: absolute;
+    bottom: 0px;
+    min-width: 304px;
+    width: 20%;
+    margin-left: -20px;
+    box-shadow: 0px -1px 8px rgba(0, 0, 0, 0.5), inset 0px 50px 15px rgba(255, 255, 255, 0.1);
+}
+
+.controls-container>ul>li {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 35px;
+    width: calc(50% - 2px);
 }
