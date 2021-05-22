@@ -109,6 +109,10 @@ section {
     box-shadow: 0px 0px 1px #141414;
 }
 
+#selected-tool {
+    background: #ADADAD;
+}
+
 .tools-icon {
     height: 20px;
     width: 20px;
@@ -235,7 +239,7 @@ section {
             rgba(255, 0, 0, 1) 100%);
 }
 
-.layers-title{
+.layers-title {
     border-top: 1px solid black;
 }
 
@@ -267,7 +271,7 @@ section {
     border-radius: 50%;
 }
 
-#selected-layer{
+#selected-layer {
     background: #adadad;
 }
 

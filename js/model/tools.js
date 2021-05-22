@@ -52,14 +52,17 @@ export class MoveTool {
 export class BrushTool {
   constructor() {
     this.isToolActive = false;
+    this.isMouseInCanvas = false;
   }
 
   brush(selectedLayer) {
     this.startDraw = (e) => {
-      this.isToolActive = true;
-      document.addEventListener("mouseup", this.endDraw);
-      document.addEventListener("mousemove", this.draw);
-      this.draw(e);
+      if (this.isMouseInCanvas) {
+        this.isToolActive = true;
+        document.addEventListener("mouseup", this.endDraw);
+        document.addEventListener("mousemove", this.draw);
+        this.draw(e);
+      }
     };
 
     this.endDraw = () => {
@@ -70,7 +73,7 @@ export class BrushTool {
     };
 
     this.draw = (e) => {
-      if (!this.isToolActive) {
+      if (!this.isToolActive && !this.isMouseInCanvas) {
         return;
       }
 
@@ -87,27 +90,40 @@ export class BrushTool {
 
     // event listeners
     document.addEventListener("mousedown", this.startDraw);
+    canvasDiv.addEventListener("mouseenter", () => {
+      this.isMouseInCanvas = true;
+    });
+    canvasDiv.addEventListener("mouseout", () => {
+      this.isMouseInCanvas = false;
+    });
   }
 }
 
 export class EraserTool {
   constructor() {
     this.isToolActive = false;
+    this.isMouseInCanvas = false;
   }
 
   erase(selectedLayer) {
-    var startErase = (e) => {
-      this.isToolActive = true;
-      erase(e);
+    this.startErase = (e) => {
+      if (this.isMouseInCanvas) {
+        this.isToolActive = true;
+        document.addEventListener("mouseup", this.endErase);
+        document.addEventListener("mousemove", this.erase);
+        this.erase(e);
+      }
     };
 
-    var endErase = () => {
+    this.endErase = () => {
       this.isToolActive = false;
       selectedLayer.ctx.beginPath();
+      document.removeEventListener("mouseup", this.endErase);
+      document.removeEventListener("mousemove", this.erase);
     };
 
-    var erase = (e) => {
-      if (!this.isToolActive) {
+    this.erase = (e) => {
+      if (!this.isToolActive && !this.isMouseInCanvas) {
         return;
       }
 
@@ -123,9 +139,13 @@ export class EraserTool {
     };
 
     // event listeners
-    selectedLayer.canvas.addEventListener("mousedown", startErase);
-    selectedLayer.canvas.addEventListener("mouseup", endErase);
-    selectedLayer.canvas.addEventListener("mousemove", erase);
+    document.addEventListener("mousedown", this.startErase);
+    canvasDiv.addEventListener("mouseenter", () => {
+      this.isMouseInCanvas = true;
+    });
+    canvasDiv.addEventListener("mouseout", () => {
+      this.isMouseInCanvas = false;
+    });
   }
 }
 
