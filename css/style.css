@@ -247,12 +247,13 @@ section {
 .layers-list-container {
     height: calc(100% - 45px);
     overflow-y: scroll;
+    margin-left: -20px;
 }
 
 #layers-list>li {
     padding: 12px 0;
     margin-left: -20px;
-    padding-left: 20px;
+    padding-left: 40px;
     border-bottom: 1px solid #363636;
     font-size: 10pt;
 }
@@ -264,6 +265,10 @@ section {
     height: 10px;
     background: white;
     border-radius: 50%;
+}
+
+#selected-layer{
+    background: #adadad;
 }
 
 .controls-container {

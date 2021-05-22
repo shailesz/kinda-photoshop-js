@@ -5,21 +5,21 @@ Basic requirements:
 
     Open images ✅
 
-    Insert images
+    Insert images 
     
     Layers
-        add layer 🚀
+        add layer ✅
+        reposition layer ✅
         delete layer
-        reposition layer
 
     Basic tools
-        Move tool
+        Move tool ✅
+        Brush tool ✅
+        Eraser tool 🚀
         Hand tool
-        Brush tool
         Eyedropper tool
         Selection tools
         Text tool
-        Eraser tool
 
     Basic image manipulation
         Rotate

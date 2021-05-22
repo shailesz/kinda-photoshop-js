@@ -55,8 +55,6 @@ export class BrushTool {
   }
 
   brush(selectedLayer) {
-    this.workingLayer = selectedLayer;
-
     this.startDraw = (e) => {
       this.isToolActive = true;
       document.addEventListener("mouseup", this.endDraw);

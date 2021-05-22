@@ -9,7 +9,6 @@ export class LayerManager {
     this.count = 0;
     this.backgroundLayer = new Canvas(backgroundImageSrc, false);
     this.selectedLayer = this.backgroundLayer;
-
   }
 
   // currently adding transparent layer
@@ -33,10 +32,20 @@ export class LayerManager {
     let newElement = document.createElement("li");
     newElement.innerText = newLayer.layerName;
 
+    var manageSelectedEffect = (element) => {
+      let getPreviousSelected = document.querySelector("#selected-layer");
+      if (getPreviousSelected) {
+        getPreviousSelected.removeAttribute("id");
+      }
+      element.id = "selected-layer";
+    };
+
+    manageSelectedEffect(newElement);
+
     newElement.addEventListener("click", () => {
       cb(this.selectedLayer, newLayer);
       this.selectedLayer = newLayer;
-      
+      manageSelectedEffect(newElement);
     });
 
     if (!layersListLi[0]) {
