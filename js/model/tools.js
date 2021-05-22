@@ -55,17 +55,23 @@ export class BrushTool {
   }
 
   brush(selectedLayer) {
-    var startDraw = (e) => {
+    this.workingLayer = selectedLayer;
+
+    this.startDraw = (e) => {
       this.isToolActive = true;
-      draw(e);
+      document.addEventListener("mouseup", this.endDraw);
+      document.addEventListener("mousemove", this.draw);
+      this.draw(e);
     };
 
-    var endDraw = () => {
+    this.endDraw = () => {
       this.isToolActive = false;
       selectedLayer.ctx.beginPath();
+      document.removeEventListener("mouseup", this.endDraw);
+      document.removeEventListener("mousemove", this.draw);
     };
 
-    var draw = (e) => {
+    this.draw = (e) => {
       if (!this.isToolActive) {
         return;
       }
@@ -82,9 +88,7 @@ export class BrushTool {
     };
 
     // event listeners
-    selectedLayer.canvas.addEventListener("mousedown", startDraw);
-    selectedLayer.canvas.addEventListener("mouseup", endDraw);
-    selectedLayer.canvas.addEventListener("mousemove", draw);
+    document.addEventListener("mousedown", this.startDraw);
   }
 }
 
@@ -133,15 +137,13 @@ export class EyedropperTool {
   }
 
   eyedrop(artboard) {
-    // TODO: eyedropper functionality 
+    // TODO: eyedropper functionality
     // getimage and getpx methods hune raicha
     // maybe combine all layers so that can accurately get the color of any layers that the mouse may hover
     // aaru ma ta single layer linthiyo aba that wont work fam
     // good luck :)
-
     // artboard.addEventListener("mousemove", (e) => {
     //   console.log("hello");
-
     // });
   }
 }

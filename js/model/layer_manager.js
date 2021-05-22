@@ -10,12 +10,11 @@ export class LayerManager {
     this.backgroundLayer = new Canvas(backgroundImageSrc, false);
     this.selectedLayer = this.backgroundLayer;
 
-    this.addLayer(this.backgroundLayer);
   }
 
   // currently adding transparent layer
   // also pushing it to this.myLayers
-  addLayer(layer = null) {
+  addLayer(layer = null, cb) {
     let newLayer = layer
       ? layer
       : new Canvas(
@@ -35,7 +34,9 @@ export class LayerManager {
     newElement.innerText = newLayer.layerName;
 
     newElement.addEventListener("click", () => {
-      this.selectedLayer = this.backgroundLayer;
+      cb(this.selectedLayer, newLayer);
+      this.selectedLayer = newLayer;
+      
     });
 
     if (!layersListLi[0]) {
