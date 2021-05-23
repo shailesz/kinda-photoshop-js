@@ -16,10 +16,10 @@ Basic requirements:
         Move tool ✅
         Brush tool ✅
         Eraser tool ✅
-        Hand tool 😭
-        Eyedropper tool
-        Selection tool 😭
+        Selection tool 🚀
         Text tool
+        Eyedropper tool
+        Hand tool 😭
 
     Basic image manipulation 😭
         Rotate

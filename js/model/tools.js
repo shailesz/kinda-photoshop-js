@@ -102,7 +102,7 @@ export class BrushTool extends Tool {
     };
 
     this.draw = (e) => {
-      if (!this.isToolActive && !this.isMouseInCanvas) {
+      if (!this.isToolActive || !this.isMouseInCanvas) {
         return;
       }
 
@@ -138,12 +138,12 @@ export class EraserTool extends Tool {
   }
 
   activate(layer) {
-    console.log('eraser activate garyo');
+    console.log("eraser activate garyo");
     this.eraser(layer);
   }
 
   deactivate(layer) {
-    console.log('eraser deactivate garyo');
+    console.log("eraser deactivate garyo");
     document.removeEventListener("mousedown", this.startErase);
     this.isMouseInCanvas = false;
     this.isToolActive = false;
@@ -185,6 +185,75 @@ export class EraserTool extends Tool {
     canvasDiv.addEventListener("mouseenter", () => {
       this.isMouseInCanvas = true;
     });
+    canvasDiv.addEventListener("mouseout", () => {
+      this.isMouseInCanvas = false;
+    });
+  }
+}
+
+export class SelectionTool extends Tool {
+  constructor() {
+    super();
+    this.isMouseInCanvas = false;
+    this.toolboxImgSrc = "./images/selection.svg";
+    this.altText = "Selection";
+  }
+
+  activate(layer) {
+    this.select(layer);
+  }
+
+  deactivate(layer) {
+    console.log("deactivate");
+  }
+
+  select(selectedLayer) {
+    this.mouseDownVector = {};
+    this.mouseUpVector = {};
+
+    this.startSelection = (e) => {
+      if (this.isMouseInCanvas) {
+        this.isToolActive = true;
+
+        this.mouseDownVector["x"] = e.offsetX;
+        this.mouseDownVector["y"] = e.offsetY;
+
+        document.addEventListener("mouseup", this.endSelection);
+        document.addEventListener("mousemove", this.selection);
+      }
+    };
+
+    this.endSelection = (e) => {
+      this.isToolActive = false;
+
+      this.mouseUpVector["x"] = e.offsetX;
+      this.mouseUpVector["y"] = e.offsetY;
+
+      document.removeEventListener("mouseup", this.endSelection);
+      document.removeEventListener("mousemove", this.selection);
+    };
+
+    this.selection = (e) => {
+      if (!this.isToolActive || !this.isMouseInCanvas) {
+        return;
+      }
+      console.log(e.offsetX, e.offsetY);
+      this.mouseUpVector["x"] = e.offsetX;
+      this.mouseUpVector["y"] = e.offsetY;
+      selectedLayer.ctx.fillRect(
+        this.mouseDownVector.x,
+        this.mouseDownVector.y,
+        this.mouseUpVector.x - this.mouseDownVector.x,
+        this.mouseUpVector.y - this.mouseDownVector.y
+      );
+    };
+
+    document.addEventListener("mousedown", this.startSelection);
+
+    canvasDiv.addEventListener("mouseenter", () => {
+      this.isMouseInCanvas = true;
+    });
+
     canvasDiv.addEventListener("mouseout", () => {
       this.isMouseInCanvas = false;
     });

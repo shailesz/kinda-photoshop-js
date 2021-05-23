@@ -33,8 +33,10 @@ export class Photoshop {
       addLayerCallback
     );
 
-    // select a tool
+    // select a tool, this activates the tool
     this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
+
+    // this.toolManager.selectedTool.select(this.layerManager.selectedLayer);
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {

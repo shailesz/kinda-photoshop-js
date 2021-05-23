@@ -1,13 +1,20 @@
-import { MoveTool, BrushTool, EraserTool, EyedropperTool } from "./tools.js";
+import {
+  MoveTool,
+  BrushTool,
+  EraserTool,
+  SelectionTool,
+  EyedropperTool,
+} from "./tools.js";
 
 export class ToolManager {
   constructor(callback) {
     this.myTools = [];
-    this.callback = callback;
+    this.callback = callback; // TODO: refactor this callback name
 
     this.moveTool = this.pushTool(new MoveTool());
     this.brushTool = this.pushTool(new BrushTool());
     this.eraserTool = this.pushTool(new EraserTool());
+    this.selectionTool = this.pushTool(new SelectionTool());
     this.eyedropperTool = this.pushTool(new EyedropperTool());
 
     this.selectedTool = this.moveTool;

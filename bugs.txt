@@ -1,3 +1,6 @@
 1. move tool le tala lagyo bhane draw hunna, tools stop working
     brush tool 
     eraser tool
+
+2. if (!this.isToolActive && !this.isMouseInCanvas) or hunu parne ho i put and 
+    oops! haha
