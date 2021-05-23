@@ -5,7 +5,7 @@ Basic requirements:
 
     Open images ✅
 
-    Insert images 
+    Insert images 😭
     
     Layers
         add layer ✅
@@ -16,12 +16,12 @@ Basic requirements:
         Move tool ✅
         Brush tool ✅
         Eraser tool ✅
-        Hand tool
+        Hand tool 😭
         Eyedropper tool
-        Selection tools
+        Selection tool 😭
         Text tool
 
-    Basic image manipulation
+    Basic image manipulation 😭
         Rotate
         Resize
 

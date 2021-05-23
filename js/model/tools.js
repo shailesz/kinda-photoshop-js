@@ -1,31 +1,48 @@
-export class MoveTool {
+class Tool {
   constructor() {
+    this.class = "tools-icon";
     this.isToolActive = false;
+  }
+}
+
+export class MoveTool extends Tool {
+  constructor() {
+    super();
+    this.toolboxImgSrc = "./images/move.svg";
+    this.altText = "Move";
+  }
+
+  activate(layer) {
+    this.move(layer);
+  }
+
+  deactivate(layer) {
+    layer.canvas.removeEventListener("mousedown", this.startMove);
   }
 
   move(selectedLayer) {
     var x = 0;
     var y = 0;
 
-    var startMove = (e) => {
+    this.startMove = (e) => {
       this.isToolActive = true;
       x = e.clientX;
       y = e.clientY;
 
       // // attach the listeners here
-      document.addEventListener("mouseup", endMove);
-      document.addEventListener("mousemove", reposition);
+      document.addEventListener("mouseup", this.endMove);
+      document.addEventListener("mousemove", this.reposition);
     };
 
-    var endMove = () => {
+    this.endMove = () => {
       this.isToolActive = false;
 
       // // remove listeners
-      document.removeEventListeners("mouseup", endMove);
-      document.removeEventListeners("mousemove", reposition);
+      document.removeEventListener("mouseup", this.endMove);
+      document.removeEventListener("mousemove", this.reposition);
     };
 
-    var reposition = (e) => {
+    this.reposition = (e) => {
       if (!this.isToolActive) {
         return;
       }
@@ -45,14 +62,26 @@ export class MoveTool {
     };
 
     // event listener for when mouce moves
-    selectedLayer.canvas.addEventListener("mousedown", startMove);
+    selectedLayer.canvas.addEventListener("mousedown", this.startMove);
   }
 }
 
-export class BrushTool {
+export class BrushTool extends Tool {
   constructor() {
-    this.isToolActive = false;
+    super();
     this.isMouseInCanvas = false;
+    this.toolboxImgSrc = "./images/brush.svg";
+    this.altText = "Brush";
+  }
+
+  activate(layer) {
+    console.log("brush activate bhayo");
+    this.brush(layer);
+  }
+
+  deactivate(layer) {
+    console.log("brush deactivate bhayo");
+    document.removeEventListener("mousedown", this.startDraw);
   }
 
   brush(selectedLayer) {
@@ -78,6 +107,7 @@ export class BrushTool {
       }
 
       // variables here
+      selectedLayer.ctx.globalCompositeOperation = "source-over";
       selectedLayer.ctx.strokeStyle = "yellow";
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
@@ -99,13 +129,27 @@ export class BrushTool {
   }
 }
 
-export class EraserTool {
+export class EraserTool extends Tool {
   constructor() {
-    this.isToolActive = false;
+    super();
     this.isMouseInCanvas = false;
+    this.toolboxImgSrc = "./images/eraser.svg";
+    this.altText = "Eraser";
   }
 
-  erase(selectedLayer) {
+  activate(layer) {
+    console.log('eraser activate garyo');
+    this.eraser(layer);
+  }
+
+  deactivate(layer) {
+    console.log('eraser deactivate garyo');
+    document.removeEventListener("mousedown", this.startErase);
+    this.isMouseInCanvas = false;
+    this.isToolActive = false;
+  }
+
+  eraser(selectedLayer) {
     this.startErase = (e) => {
       if (this.isMouseInCanvas) {
         this.isToolActive = true;
@@ -114,14 +158,12 @@ export class EraserTool {
         this.erase(e);
       }
     };
-
     this.endErase = () => {
       this.isToolActive = false;
       selectedLayer.ctx.beginPath();
       document.removeEventListener("mouseup", this.endErase);
       document.removeEventListener("mousemove", this.erase);
     };
-
     this.erase = (e) => {
       if (!this.isToolActive && !this.isMouseInCanvas) {
         return;
@@ -129,6 +171,7 @@ export class EraserTool {
 
       // variables here
       selectedLayer.ctx.globalCompositeOperation = "destination-out";
+      selectedLayer.ctx.strokeStyle = "black";
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
@@ -137,7 +180,6 @@ export class EraserTool {
       selectedLayer.ctx.beginPath();
       selectedLayer.ctx.moveTo(e.offsetX, e.offsetY);
     };
-
     // event listeners
     document.addEventListener("mousedown", this.startErase);
     canvasDiv.addEventListener("mouseenter", () => {
@@ -149,9 +191,12 @@ export class EraserTool {
   }
 }
 
-export class EyedropperTool {
+// TODO: this tool, make it fam
+export class EyedropperTool extends Tool {
   constructor() {
-    this.isToolActive = false;
+    super();
+    this.toolboxImgSrc = "./images/eyedropper.svg";
+    this.altText = "Eyedropper";
   }
 
   eyedrop(artboard) {

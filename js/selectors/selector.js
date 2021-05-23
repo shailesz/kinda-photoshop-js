@@ -5,3 +5,6 @@ var removeLayerButton = document.querySelector("#remove-layer");
 
 var layersList = document.querySelector("#layers-list");
 // var layersListLi = document.querySelector("#layers-list>li");
+
+// selecting toolbox
+var toolbox = document.querySelector(".tools");

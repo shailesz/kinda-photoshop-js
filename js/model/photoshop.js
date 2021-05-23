@@ -3,38 +3,48 @@ import { ToolManager } from "./tool_manager.js";
 
 export class Photoshop {
   constructor() {
-    this.layerManager = new LayerManager("../../images/2.png");
-    this.toolManager = new ToolManager();
+    var toolCallback = (tool) => {
+      // deactivate previous tool
+      console.log(this.layerManager.selectedLayer);
+      this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
 
-    var cb = (previousLayer, selectedLayer) => {
-      console.log(selectedLayer);
-      document.removeEventListener(
-        "mousedown",
-        this.toolManager.brushTool.startDraw
-      );
-      
-    // brush tool with white color for now
-    this.toolManager.brushTool.brush(selectedLayer);
+      // select new tool
+      this.toolManager.selectTool(tool);
+
+      // activate new tool
+      this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
     };
 
-    this.layerManager.addLayer(this.layerManager.backgroundLayer, cb);
+    var addLayerCallback = (previousLayer, selectedLayer) => {
+      // deactivate tool for previous layer
+      this.toolManager.selectedTool.deactivate(previousLayer);
 
-    // eraser tool
-    // this.toolManager.eraserTool.erase(this.layerManager.selectedLayer);
+      // activate tool for new layer
+      this.toolManager.selectedTool.activate(selectedLayer);
+    };
 
-    // move tool
-    // this.toolManager.moveTool.move(this.layerManager.selectedLayer);
+    // creating layer manager and tool manager
+    this.layerManager = new LayerManager("../../images/2.png");
+    this.toolManager = new ToolManager(toolCallback);
 
-    // eyedropper tool
-    // this.toolManager.eyedropperTool.eyedrop(canvasDiv);
+    // add first layer an select it
+    this.layerManager.addLayer(
+      this.layerManager.backgroundLayer,
+      addLayerCallback
+    );
 
-    // brush tool with white color for now
-    this.toolManager.brushTool.brush(this.layerManager.selectedLayer);
+    // select a tool
+    this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
-      this.layerManager.addLayer(null, cb);
-      this.update();
+      // purano wala deactivating
+      this.deactivator();
+
+      this.layerManager.addLayer(null, addLayerCallback);
+
+      // naya wala activating
+      this.activator();
     });
 
     // delete garne thau ho yo chai
@@ -42,12 +52,15 @@ export class Photoshop {
       // this.layerManager.removeLayer();
       console.log(this.layerManager.selectedLayer);
     });
-
-    // this.update();
   }
 
-  update() {
-    // brush tool with white color for now
-    this.toolManager.brushTool.brush(this.layerManager.selectedLayer);
+  // tool and layer activator
+  activator() {
+    this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
+  }
+
+  // tool and layer deactivator
+  deactivator() {
+    this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
   }
 }
