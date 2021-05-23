@@ -4,8 +4,6 @@ export class ToolManager {
   constructor(callback) {
     this.myTools = [];
     this.callback = callback;
-    // let moveToolElement = document.querySelector(".tools>li");
-    // moveToolElement.id = "selected-tool";
 
     this.moveTool = this.pushTool(new MoveTool());
     this.brushTool = this.pushTool(new BrushTool());
@@ -17,16 +15,25 @@ export class ToolManager {
     this.generateToolBox();
   }
 
+  // change selected tool
   selectTool(tool) {
-    // console.log(tool);
     this.selectedTool = tool;
   }
 
+  /*
+   *  takes tool and pushes it to myArray and returns the tool
+   */
   pushTool(tool) {
     this.myTools.push(tool);
     return tool;
   }
 
+  /**
+   *
+   * @param {tool} tool to be added in the toolbox
+   *
+   * generate tool with event listeners
+   */
   generateTool(tool) {
     // creating li for tool
     var newTool = document.createElement("li");
@@ -41,7 +48,12 @@ export class ToolManager {
 
     // callback for when tool selected
     newTool.addEventListener("click", () => {
-      // this.selectTool(tool);
+      // remove id of deactivated tool
+      let temp = document.querySelector("#selected-tool");
+      temp.removeAttribute("id");
+
+      // add id of activated tool
+      newTool.setAttribute("id", "selected-tool");
       this.callback(tool);
     });
 
@@ -49,6 +61,9 @@ export class ToolManager {
     toolbox.appendChild(newTool);
   }
 
+  /**
+   *  generates toolbox UI
+   */
   generateToolBox() {
     for (let tool of this.myTools) {
       this.generateTool(tool);

@@ -1,0 +1,3 @@
+1. move tool le tala lagyo bhane draw hunna, tools stop working
+    brush tool 
+    eraser tool

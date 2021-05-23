@@ -27,7 +27,6 @@ Basic requirements:
 
     Export options
     
-
 Extra features:
     Adjustment tools for images
 
