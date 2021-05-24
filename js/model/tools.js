@@ -195,7 +195,7 @@ export class SelectionTool extends Tool {
   constructor() {
     super();
     this.isMouseInCanvas = false;
-    this.toolboxImgSrc = "./images/selection.svg";
+    this.toolboxImgSrc = "../../images/selection.svg";
     this.altText = "Selection";
   }
 
@@ -208,55 +208,105 @@ export class SelectionTool extends Tool {
   }
 
   select(selectedLayer) {
-    this.mouseDownVector = {};
-    this.mouseUpVector = {};
+    var element = document.querySelector(".canvas");
+    this.mouseDownVector = {
+      // mouse start
+      x: 0,
+      y: 0,
+    };
 
+    this.mousePositionVector = {
+      // mouse realtime position
+      x: 0,
+      y: 0,
+    };
+
+    function setMousePosition(e) {
+      mousePositionVector.x = ev.pageX + window.pageXOffset;
+      mousePositionVector.y = ev.pageY + window.pageYOffset;
+    }
+
+    // mouse thichyo
     this.startSelection = (e) => {
-      if (this.isMouseInCanvas) {
-        this.isToolActive = true;
+      this.isToolActive = true;
 
-        this.mouseDownVector["x"] = e.offsetX;
-        this.mouseDownVector["y"] = e.offsetY;
+      this.mouseDownVector.x = e.clientX;
+      this.mouseDownVector.y = e.clientY;
 
-        document.addEventListener("mouseup", this.endSelection);
-        document.addEventListener("mousemove", this.selection);
+      document.addEventListener("mouseup", this.endSelection);
+      document.addEventListener("mousemove", this.selection);
+
+      if (!document.querySelector("#selection")) {
+        this.selectionDiv = document.createElement("div");
+        this.selectionDiv.id = "selection";
+        this.selectionDiv.style.top =
+          parseInt(
+            this.mouseDownVector.y - element.getBoundingClientRect().top
+          ) + "px";
+        this.selectionDiv.style.left =
+          parseInt(
+            this.mouseDownVector.x - element.getBoundingClientRect().left
+          ) + "px";
+        canvasDiv.appendChild(this.selectionDiv);
+      } else {
+        this.selectionDiv.style.top =
+          parseInt(
+            this.mouseDownVector.y - element.getBoundingClientRect().top
+          ) + "px";
+        this.selectionDiv.style.left =
+          parseInt(
+            this.mouseDownVector.x - element.getBoundingClientRect().left
+          ) + "px";
+        this.selectionDiv.style.width = "0px";
+        this.selectionDiv.style.height = "0px";
       }
     };
 
+    // mouse uthayo
     this.endSelection = (e) => {
       this.isToolActive = false;
-
-      this.mouseUpVector["x"] = e.offsetX;
-      this.mouseUpVector["y"] = e.offsetY;
-
       document.removeEventListener("mouseup", this.endSelection);
       document.removeEventListener("mousemove", this.selection);
     };
 
+    // mouse hallayo
     this.selection = (e) => {
-      if (!this.isToolActive || !this.isMouseInCanvas) {
+      if (!this.isToolActive) {
         return;
       }
-      console.log(e.offsetX, e.offsetY);
-      this.mouseUpVector["x"] = e.offsetX;
-      this.mouseUpVector["y"] = e.offsetY;
-      selectedLayer.ctx.fillRect(
-        this.mouseDownVector.x,
-        this.mouseDownVector.y,
-        this.mouseUpVector.x - this.mouseDownVector.x,
-        this.mouseUpVector.y - this.mouseDownVector.y
-      );
+
+      this.selectionDiv.style.width =
+        Math.abs(e.clientX - this.mouseDownVector.x) + "px";
+
+      this.selectionDiv.style.height =
+        Math.abs(e.clientY - this.mouseDownVector.y) + "px";
+
+      this.selectionDiv.style.left =
+        e.clientX - this.mouseDownVector.x < 0
+          ? parseInt(e.clientX - element.getBoundingClientRect().left) + "px"
+          : parseInt(
+              this.mouseDownVector.x - element.getBoundingClientRect().left
+            ) + "px";
+
+      this.selectionDiv.style.top =
+        e.clientY - this.mouseDownVector.y < 0
+          ? parseInt(e.clientY - element.getBoundingClientRect().top) + "px"
+          : parseInt(
+              this.mouseDownVector.y - element.getBoundingClientRect().top
+            ) + "px";
     };
 
     document.addEventListener("mousedown", this.startSelection);
 
-    canvasDiv.addEventListener("mouseenter", () => {
-      this.isMouseInCanvas = true;
-    });
+    // canvasDiv.addEventListener("mouseenter", () => {
+    //   this.isMouseInCanvas = true;
+    //   console.log('enter bhayo');
+    // });
 
-    canvasDiv.addEventListener("mouseout", () => {
-      this.isMouseInCanvas = false;
-    });
+    // canvasDiv.addEventListener("mouseout", () => {
+    //   this.isMouseInCanvas = false;
+    //   console.log('exit bhayo');
+    // });
   }
 }
 

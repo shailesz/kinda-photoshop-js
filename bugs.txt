@@ -4,3 +4,5 @@
 
 2. if (!this.isToolActive && !this.isMouseInCanvas) or hunu parne ho i put and 
     oops! haha
+
+3. chrome ma toolbox is broken, img haru broken

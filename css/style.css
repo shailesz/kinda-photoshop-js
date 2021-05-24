@@ -293,3 +293,8 @@ section {
     line-height: 35px;
     width: calc(50% - 2px);
 }
+
+#selection {
+    position: absolute;
+    border: 2px dashed white;
+}
