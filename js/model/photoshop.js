@@ -3,9 +3,8 @@ import { ToolManager } from "./tool_manager.js";
 
 export class Photoshop {
   constructor() {
-    var toolCallback = (tool) => {
+    let toolCallback = (tool) => {
       // deactivate previous tool
-      console.log(this.layerManager.selectedLayer);
       this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
 
       // select new tool
@@ -15,7 +14,7 @@ export class Photoshop {
       this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
     };
 
-    var addLayerCallback = (previousLayer, selectedLayer) => {
+    let addLayerCallback = (previousLayer, selectedLayer) => {
       // deactivate tool for previous layer
       this.toolManager.selectedTool.deactivate(previousLayer);
 

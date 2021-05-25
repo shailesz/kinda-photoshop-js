@@ -72,16 +72,36 @@ export class BrushTool extends Tool {
     this.isMouseInCanvas = false;
     this.toolboxImgSrc = "./images/brush.svg";
     this.altText = "Brush";
+    this.selectionDiv = null;
+
+    this.flipIsMouseInCanvas = () => {
+      this.isMouseInCanvas = !this.isMouseInCanvas;
+    };
   }
 
   activate(layer) {
-    console.log("brush activate bhayo");
     this.brush(layer);
   }
 
   deactivate(layer) {
-    console.log("brush deactivate bhayo");
+    this.isMouseInCanvas = false;
+    this.isToolActive = false;
+
     document.removeEventListener("mousedown", this.startDraw);
+
+    if (this.selectionDiv) {
+      this.selectionDiv.removeEventListener(
+        "mouseenter",
+        this.flipIsMouseInCanvas
+      );
+      this.selectionDiv.removeEventListener(
+        "mouseout",
+        this.flipIsMouseInCanvas
+      );
+    } else {
+      canvasDiv.removeEventListener("mouseenter", this.flipIsMouseInCanvas);
+      canvasDiv.removeEventListener("mouseout", this.flipIsMouseInCanvas);
+    }
   }
 
   brush(selectedLayer) {
@@ -112,20 +132,31 @@ export class BrushTool extends Tool {
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
-      selectedLayer.ctx.lineTo(e.offsetX, e.offsetY);
+      let element = document.querySelector(".canvas");
+      let mouseX = e.clientX - element.getBoundingClientRect().left;
+      let mouseY = e.clientY - element.getBoundingClientRect().top;
+      selectedLayer.ctx.lineTo(mouseX, mouseY);
       selectedLayer.ctx.stroke();
       selectedLayer.ctx.beginPath();
-      selectedLayer.ctx.moveTo(e.offsetX, e.offsetY);
+      selectedLayer.ctx.moveTo(mouseX, mouseY);
     };
 
     // event listeners
     document.addEventListener("mousedown", this.startDraw);
-    canvasDiv.addEventListener("mouseenter", () => {
-      this.isMouseInCanvas = true;
-    });
-    canvasDiv.addEventListener("mouseout", () => {
-      this.isMouseInCanvas = false;
-    });
+
+    this.selectionDiv = document.querySelector("#selection");
+    if (this.selectionDiv) {
+      this.selectionDiv.addEventListener(
+        "mouseenter",
+        this.flipIsMouseInCanvas
+      );
+
+      this.selectionDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+    } else {
+      canvasDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+
+      canvasDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+    }
   }
 }
 
@@ -135,18 +166,35 @@ export class EraserTool extends Tool {
     this.isMouseInCanvas = false;
     this.toolboxImgSrc = "./images/eraser.svg";
     this.altText = "Eraser";
+    this.selectionDiv = null;
+    this.flipIsMouseInCanvas = () => {
+      this.isMouseInCanvas = !this.isMouseInCanvas;
+    };
   }
 
   activate(layer) {
-    console.log("eraser activate garyo");
     this.eraser(layer);
   }
 
   deactivate(layer) {
-    console.log("eraser deactivate garyo");
-    document.removeEventListener("mousedown", this.startErase);
     this.isMouseInCanvas = false;
     this.isToolActive = false;
+
+    document.removeEventListener("mousedown", this.startErase);
+
+    if (this.selectionDiv) {
+      this.selectionDiv.removeEventListener(
+        "mouseenter",
+        this.flipIsMouseInCanvas
+      );
+      this.selectionDiv.removeEventListener(
+        "mouseout",
+        this.flipIsMouseInCanvas
+      );
+    } else {
+      canvasDiv.removeEventListener("mouseenter", this.flipIsMouseInCanvas);
+      canvasDiv.removeEventListener("mouseout", this.flipIsMouseInCanvas);
+    }
   }
 
   eraser(selectedLayer) {
@@ -158,14 +206,16 @@ export class EraserTool extends Tool {
         this.erase(e);
       }
     };
+
     this.endErase = () => {
       this.isToolActive = false;
       selectedLayer.ctx.beginPath();
       document.removeEventListener("mouseup", this.endErase);
       document.removeEventListener("mousemove", this.erase);
     };
+
     this.erase = (e) => {
-      if (!this.isToolActive && !this.isMouseInCanvas) {
+      if (!this.isToolActive || !this.isMouseInCanvas) {
         return;
       }
 
@@ -175,19 +225,30 @@ export class EraserTool extends Tool {
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
-      selectedLayer.ctx.lineTo(e.offsetX, e.offsetY);
+      let element = document.querySelector(".canvas");
+      let mouseX = e.clientX - element.getBoundingClientRect().left;
+      let mouseY = e.clientY - element.getBoundingClientRect().top;
+      selectedLayer.ctx.lineTo(mouseX, mouseY);
       selectedLayer.ctx.stroke();
       selectedLayer.ctx.beginPath();
-      selectedLayer.ctx.moveTo(e.offsetX, e.offsetY);
+      selectedLayer.ctx.moveTo(mouseX, mouseY);
     };
     // event listeners
     document.addEventListener("mousedown", this.startErase);
-    canvasDiv.addEventListener("mouseenter", () => {
-      this.isMouseInCanvas = true;
-    });
-    canvasDiv.addEventListener("mouseout", () => {
-      this.isMouseInCanvas = false;
-    });
+
+    this.selectionDiv = document.querySelector("#selection");
+    if (this.selectionDiv) {
+      this.selectionDiv.addEventListener(
+        "mouseenter",
+        this.flipIsMouseInCanvas
+      );
+
+      this.selectionDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+    } else {
+      canvasDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+
+      canvasDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+    }
   }
 }
 
@@ -195,8 +256,11 @@ export class SelectionTool extends Tool {
   constructor() {
     super();
     this.isMouseInCanvas = false;
-    this.toolboxImgSrc = "../../images/selection.svg";
+    this.toolboxImgSrc = "./images/selection.svg";
     this.altText = "Selection";
+    this.flipIsMouseInCanvas = () => {
+      this.isMouseInCanvas = !this.isMouseInCanvas;
+    };
   }
 
   activate(layer) {
@@ -204,7 +268,9 @@ export class SelectionTool extends Tool {
   }
 
   deactivate(layer) {
-    console.log("deactivate");
+    this.isMouseInCanvas = false;
+    this.isToolActive = false;
+    canvasDiv.removeEventListener("mousedown", this.startSelection);
   }
 
   select(selectedLayer) {
@@ -214,17 +280,6 @@ export class SelectionTool extends Tool {
       x: 0,
       y: 0,
     };
-
-    this.mousePositionVector = {
-      // mouse realtime position
-      x: 0,
-      y: 0,
-    };
-
-    function setMousePosition(e) {
-      mousePositionVector.x = ev.pageX + window.pageXOffset;
-      mousePositionVector.y = ev.pageY + window.pageYOffset;
-    }
 
     // mouse thichyo
     this.startSelection = (e) => {
@@ -239,32 +294,25 @@ export class SelectionTool extends Tool {
       if (!document.querySelector("#selection")) {
         this.selectionDiv = document.createElement("div");
         this.selectionDiv.id = "selection";
-        this.selectionDiv.style.top =
-          parseInt(
-            this.mouseDownVector.y - element.getBoundingClientRect().top
-          ) + "px";
-        this.selectionDiv.style.left =
-          parseInt(
-            this.mouseDownVector.x - element.getBoundingClientRect().left
-          ) + "px";
         canvasDiv.appendChild(this.selectionDiv);
       } else {
-        this.selectionDiv.style.top =
-          parseInt(
-            this.mouseDownVector.y - element.getBoundingClientRect().top
-          ) + "px";
-        this.selectionDiv.style.left =
-          parseInt(
-            this.mouseDownVector.x - element.getBoundingClientRect().left
-          ) + "px";
         this.selectionDiv.style.width = "0px";
         this.selectionDiv.style.height = "0px";
       }
+
+      this.selectionDiv.style.top =
+        parseInt(this.mouseDownVector.y - element.getBoundingClientRect().top) +
+        "px";
+      this.selectionDiv.style.left =
+        parseInt(
+          this.mouseDownVector.x - element.getBoundingClientRect().left
+        ) + "px";
     };
 
     // mouse uthayo
     this.endSelection = (e) => {
       this.isToolActive = false;
+
       document.removeEventListener("mouseup", this.endSelection);
       document.removeEventListener("mousemove", this.selection);
     };
@@ -296,17 +344,14 @@ export class SelectionTool extends Tool {
             ) + "px";
     };
 
-    document.addEventListener("mousedown", this.startSelection);
+    canvasDiv.addEventListener("mousedown", this.startSelection);
 
-    // canvasDiv.addEventListener("mouseenter", () => {
-    //   this.isMouseInCanvas = true;
-    //   console.log('enter bhayo');
-    // });
+    let selectionDiv = document.querySelector("#selection");
+    selectionDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+    selectionDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
 
-    // canvasDiv.addEventListener("mouseout", () => {
-    //   this.isMouseInCanvas = false;
-    //   console.log('exit bhayo');
-    // });
+    canvasDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+    canvasDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
   }
 }
 

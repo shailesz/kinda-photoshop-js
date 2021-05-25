@@ -7,7 +7,7 @@ import {
 } from "./tools.js";
 
 export class ToolManager {
-  constructor(callback) {
+  constructor(callback, selectionToolCallback) {
     this.myTools = [];
     this.callback = callback; // TODO: refactor this callback name
 
