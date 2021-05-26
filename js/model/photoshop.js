@@ -22,9 +22,15 @@ export class Photoshop {
       this.toolManager.selectedTool.activate(selectedLayer);
     };
 
+    let addNewLayer = () => {
+      this.layerManager.addLayer(null, addLayerCallback);
+
+      return this.layerManager.selectedLayer;
+    };
+
     // creating layer manager and tool manager
     this.layerManager = new LayerManager("../../images/2.png");
-    this.toolManager = new ToolManager(toolCallback);
+    this.toolManager = new ToolManager(toolCallback, addNewLayer);
 
     // add first layer an select it
     this.layerManager.addLayer(
@@ -39,13 +45,7 @@ export class Photoshop {
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
-      // purano wala deactivating
-      this.deactivator();
-
-      this.layerManager.addLayer(null, addLayerCallback);
-
-      // naya wala activating
-      this.activator();
+      addNewLayer();
     });
 
     // delete garne thau ho yo chai

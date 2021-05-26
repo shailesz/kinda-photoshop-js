@@ -298,3 +298,13 @@ section {
     position: absolute;
     border: 2px dashed white;
 }
+
+.text-box{
+    position: absolute;
+    background: #fff;
+    color: #000;
+}
+
+.text-box div{
+    color: #000;
+}

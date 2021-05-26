@@ -1,1 +1,11 @@
 1. image resolution mileko chaina sooo image kateko cha bot and right ma
+
+2. refactor tools.js, kinda jumbled rn
+    check what can be extended from Tool
+        like:
+             flipIsMouseInCanvas
+
+3. remove selection div when other tools are selected
+
+*IMPORTANT*
+4. move tool should move the ctx not the div itself 

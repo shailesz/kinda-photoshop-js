@@ -4,18 +4,21 @@ import {
   EraserTool,
   SelectionTool,
   EyedropperTool,
+  TextTool,
 } from "./tools.js";
 
 export class ToolManager {
-  constructor(callback, selectionToolCallback) {
+  constructor(callback, addNewLayerCallback) {
     this.myTools = [];
     this.callback = callback; // TODO: refactor this callback name
+    this.addNewLayerCallback = addNewLayerCallback;
 
     this.moveTool = this.pushTool(new MoveTool());
     this.brushTool = this.pushTool(new BrushTool());
     this.eraserTool = this.pushTool(new EraserTool());
     this.selectionTool = this.pushTool(new SelectionTool());
     this.eyedropperTool = this.pushTool(new EyedropperTool());
+    this.textTool = this.pushTool(new TextTool(this.addNewLayerCallback));
 
     this.selectedTool = this.moveTool;
 

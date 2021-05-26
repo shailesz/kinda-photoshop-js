@@ -347,10 +347,87 @@ export class SelectionTool extends Tool {
     canvasDiv.addEventListener("mousedown", this.startSelection);
 
     let selectionDiv = document.querySelector("#selection");
-    selectionDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
-    selectionDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+    if (selectionDiv) {
+      selectionDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+      selectionDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+    }
 
     canvasDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+    canvasDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
+  }
+}
+
+export class TextTool extends Tool {
+  constructor(addNewLayerCallback) {
+    super();
+    this.toolboxImgSrc = "./images/text.svg";
+    this.altText = "Text";
+    this.addNewLayerCallback = addNewLayerCallback;
+  }
+
+  activate(layer) {
+    console.log("text tool active");
+    this.addText(layer);
+  }
+  deactivate() {
+    console.log("texttool deactive");
+    document.removeEventListener("mousedown", this.startText);
+    canvasDiv.removeEventListener("mouseenter", this.flipIsMouseInCanvas);
+
+    canvasDiv.removeEventListener("mouseout", this.flipIsMouseInCanvas);
+  }
+
+  addText(layer) {
+    this.startText = (e) => {
+      this.mouseDownVector = {
+        x: e.offsetX,
+        y: e.offsetY,
+      };
+      // setup text-box
+      var element = document.createElement("div");
+      element.className = "text-box";
+      element.innerText = "Lorem";
+      element.contentEditable = true;
+      element.style.top = e.offsetY + "px";
+      element.style.left = e.offsetX + "px";
+
+      canvasDiv.appendChild(element);
+      element = document.querySelector(".text-box");
+
+      // autofocus and select the text-box
+      setTimeout(function () {
+        element.focus();
+        window.getSelection().selectAllChildren(element);
+      }, 0);
+
+      document.removeEventListener("mousedown", this.startText);
+
+      element.addEventListener("keydown", (keydownEvent) => {
+        if (keydownEvent.key === "Enter") {
+          this.endText();
+        }
+      });
+    };
+
+    this.endText = () => {
+      let textBoxDiv = document.querySelector("[contenteditable]");
+      let textContent = textBoxDiv.textContent;
+      let newTextLayer = this.addNewLayerCallback();
+      newTextLayer.ctx.fillStyle = "black";
+      newTextLayer.ctx.font = "35px Arial";
+      newTextLayer.ctx.textBaseline = "hanging";
+      newTextLayer.ctx.fillText(
+        textContent,
+        this.mouseDownVector.x,
+        this.mouseDownVector.y
+      );
+      textBoxDiv.remove();
+    };
+
+    document.addEventListener("mousedown", this.startText);
+
+    canvasDiv.addEventListener("mouseenter", this.flipIsMouseInCanvas);
+
     canvasDiv.addEventListener("mouseout", this.flipIsMouseInCanvas);
   }
 }
