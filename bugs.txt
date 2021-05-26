@@ -6,3 +6,5 @@
     oops! haha
 
 3. chrome ma toolbox is broken, img haru broken
+
+4. canvas div lai fixed height width and overflow clip or hidden

@@ -11,3 +11,5 @@
 4. move tool should move the ctx not the div itself 
 
 5. fix color selector ko design, layer can be small 
+
+6. add png images instead of svg

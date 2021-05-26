@@ -13,11 +13,11 @@ Basic requirements:
         delete layer 🙌 have general idea of how to do this
 
     Basic tools
-        Move tool ✅ 🤦‍♀️ better use update and animation frame to move ctx
+        Move tool ✅ 🤦‍♀️ must use update and animation frame to move ctx
         Brush tool ✅
         Eraser tool ✅
         Selection tool ✅
-        Text tool ✅ similar to how i can insert images, aaile samma chai how im thinking, lets seeee
+        Text tool ✅
         Eyedropper tool
         Hand tool 😭
 

@@ -39,7 +39,10 @@ export class Photoshop {
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
+      console.log('click garyo');
       this.addNewLayer();
+      this.layerManager.listLayers();
+      console.log('click garyo');
     });
 
     // delete garne thau ho yo chai
@@ -59,7 +62,7 @@ export class Photoshop {
     this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
   }
 
-  addNewLayer(layer) {
+  addNewLayer(layer = null) {
     this.layerManager.addLayer(layer, this.addLayerCallback);
 
     return this.layerManager.selectedLayer;
@@ -128,16 +131,9 @@ export class Photoshop {
         let reader = new FileReader();
 
         reader.onloadend = () => {
-          console.log(reader.result);
-          // image.src = reader.result;
-          // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-          // console.log(image.src);
-          setTimeout(() => {
-            this.addNewLayer(reader.result);
-          }, 0);
+          this.addNewLayer(reader.result);
         };
         reader.readAsDataURL(insertInput.files[0]);
-        // console.log(insertInput.files[0]);
       },
       false
     );
