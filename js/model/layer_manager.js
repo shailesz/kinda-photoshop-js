@@ -4,18 +4,18 @@ import { Canvas } from "./canvas.js";
  *
  */
 export class LayerManager {
-  constructor(backgroundImageSrc) {
+  constructor() {
     this.myLayers = {};
     this.count = 0;
-    this.backgroundLayer = new Canvas(backgroundImageSrc, false);
+    this.backgroundLayer = "./images/2.png";
     this.selectedLayer = this.backgroundLayer;
   }
 
   // currently adding transparent layer
   // also pushing it to this.myLayers
-  addLayer(layer = null, cb) {
-    let newLayer = layer
-      ? layer
+  addLayer(imgData = null, cb) {
+    let newLayer = imgData
+      ? new Canvas(imgData, false)
       : new Canvas(
           null,
           true,

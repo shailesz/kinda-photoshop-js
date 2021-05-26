@@ -35,7 +35,18 @@
               <li>Exit</li>
             </ul>
             <li>Edit</li>
-            <li>Image</li>
+            <li id="image-button" class="menu-bar-option">Image</li>
+            <ul id="image-button-dropdown" class="menu-option-dropdown lsn">
+              <li id="image-button-dropdown-insert">
+                <label for="image-insert-input">Insert</label>
+                <input
+                  type="file"
+                  name="image-insert"
+                  id="image-insert-input"
+                  accept="image/png,image/jpeg"
+                />
+              </li>
+            </ul>
             <li>Layer</li>
             <li>Type</li>
             <li>Select</li>

@@ -63,9 +63,19 @@ section {
     display: none;
 }
 
+
 #file-button-dropdown-open {
     padding: 0;
 }
+
+#image-insert-input {
+    display: none;
+}
+
+#image-button-dropdown-insert {
+    padding: 0;
+}
+
 
 .menu-option-dropdown li label {
     display: inline-block;
@@ -299,12 +309,12 @@ section {
     border: 2px dashed white;
 }
 
-.text-box{
+.text-box {
     position: absolute;
     background: #fff;
     color: #000;
 }
 
-.text-box div{
+.text-box div {
     color: #000;
 }

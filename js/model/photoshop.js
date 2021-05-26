@@ -14,7 +14,7 @@ export class Photoshop {
       this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
     };
 
-    let addLayerCallback = (previousLayer, selectedLayer) => {
+    this.addLayerCallback = (previousLayer, selectedLayer) => {
       // deactivate tool for previous layer
       this.toolManager.selectedTool.deactivate(previousLayer);
 
@@ -22,30 +22,24 @@ export class Photoshop {
       this.toolManager.selectedTool.activate(selectedLayer);
     };
 
-    let addNewLayer = () => {
-      this.layerManager.addLayer(null, addLayerCallback);
-
-      return this.layerManager.selectedLayer;
-    };
-
     // creating layer manager and tool manager
-    this.layerManager = new LayerManager("../../images/2.png");
-    this.toolManager = new ToolManager(toolCallback, addNewLayer);
+    this.layerManager = new LayerManager();
+    this.toolManager = new ToolManager(toolCallback, this.addNewLayer);
 
     // add first layer an select it
     this.layerManager.addLayer(
       this.layerManager.backgroundLayer,
-      addLayerCallback
+      this.addLayerCallback
     );
 
     // select a tool, this activates the tool
     this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
 
-    // this.toolManager.selectedTool.select(this.layerManager.selectedLayer);
+    this.uiButtons();
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
-      addNewLayer();
+      this.addNewLayer();
     });
 
     // delete garne thau ho yo chai
@@ -63,5 +57,89 @@ export class Photoshop {
   // tool and layer deactivator
   deactivator() {
     this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
+  }
+
+  addNewLayer(layer) {
+    this.layerManager.addLayer(layer, this.addLayerCallback);
+
+    return this.layerManager.selectedLayer;
+  }
+
+  uiButtons() {
+    // ui ko components here
+
+    // file ko
+    var fileButton = document.querySelector("#file-button");
+    var newButton = document.querySelector("#file-button-dropdown-new");
+    var openInput = document.querySelector("#file-open-input");
+
+    // trying to open files
+
+    let showDropdown = (selector) => {
+      let dropdown = document.querySelector(selector);
+
+      if (dropdown.className === "menu-option-dropdown lsn") {
+        dropdown.className += " show";
+      } else {
+        dropdown.className = "menu-option-dropdown lsn";
+      }
+    };
+
+    // dropdown for file
+    fileButton.addEventListener("click", () => {
+      showDropdown("#file-button-dropdown");
+    });
+
+    newButton.addEventListener("click", () => {});
+
+    // openInput
+    openInput.addEventListener(
+      "change",
+      (e) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          console.log(reader.result);
+          image.src = reader.result;
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          console.log(image.src);
+        };
+        reader.readAsDataURL(openInput.files[0]);
+        console.log(openInput.files[0]);
+      },
+      false
+    );
+
+    // image ko
+    var imageButton = document.querySelector("#image-button");
+    var imageDropdown = document.querySelector("#image-button-dropdown");
+    var insertInput = document.querySelector("#image-insert-input");
+
+    imageDropdown.style.left = imageButton.getBoundingClientRect().left + "px";
+
+    imageButton.addEventListener("click", () => {
+      showDropdown("#image-button-dropdown");
+    });
+
+    // insertInput
+    insertInput.addEventListener(
+      "change",
+      (e) => {
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+          console.log(reader.result);
+          // image.src = reader.result;
+          // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          // console.log(image.src);
+          setTimeout(() => {
+            this.addNewLayer(reader.result);
+          }, 0);
+        };
+        reader.readAsDataURL(insertInput.files[0]);
+        // console.log(insertInput.files[0]);
+      },
+      false
+    );
   }
 }

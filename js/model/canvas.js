@@ -30,35 +30,35 @@ export class Canvas {
       this.image = new Image();
       this.image.src = src;
 
-      // taking image ko height width
-      var imageWidth = this.image.width;
-      var imageHeight = this.image.height;
-
-      // finding ratio
-      this.imageRatio = imageWidth / imageHeight;
-
-      // finding canvas ko resolution to set
-      this.calculatedWidth = (canvasDivHolder.clientWidth * 0.9).toFixed(0);
-      this.calculatedHeight = (this.calculatedWidth / this.imageRatio).toFixed(
-        0
-      );
-
-      // setting up this canvas
-      this.canvas.width = this.calculatedWidth;
-      this.canvas.height = this.calculatedHeight;
-
-      // TODO: yeslai photoshop.js bata handle garne only once when creating first layer
-      // setting canvas-div ko widthharu
-      if (!isEmptyLayer) {
-        canvasDiv.setAttribute(
-          "style",
-          `height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`
-        );
-        // console.log(`height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`);
-      }
-
       // setting onload for image of this object
       this.image.onload = () => {
+        // taking image ko height width
+        var imageWidth = this.image.width;
+        var imageHeight = this.image.height;
+
+        // finding ratio
+        this.imageRatio = imageWidth / imageHeight;
+
+        // finding canvas ko resolution to set
+        this.calculatedWidth = (canvasDivHolder.clientWidth * 0.9).toFixed(0);
+        this.calculatedHeight = (
+          this.calculatedWidth / this.imageRatio
+        ).toFixed(0);
+
+        // setting up this canvas
+        this.canvas.width = this.calculatedWidth;
+        this.canvas.height = this.calculatedHeight;
+
+        // TODO: yeslai photoshop.js bata handle garne only once when creating first layer
+        // setting canvas-div ko widthharu
+        if (!isEmptyLayer) {
+          canvasDiv.setAttribute(
+            "style",
+            `height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`
+          );
+          // console.log(`height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`);
+        }
+
         // draw image on canvas
         this.ctx.drawImage(
           this.image,
