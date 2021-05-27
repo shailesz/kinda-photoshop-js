@@ -174,7 +174,6 @@ export class EraserTool extends Tool {
 
   activate(layer) {
     this.eraser(layer);
-    console.log(layer);
   }
 
   deactivate(layer) {
@@ -221,8 +220,8 @@ export class EraserTool extends Tool {
       }
 
       // variables here
-      selectedLayer.ctx.globalCompositeOperation = "destination-out";
-      selectedLayer.ctx.strokeStyle = "black";
+      selectedLayer.ctx.globalCompositeOperation = "source-over";
+      selectedLayer.ctx.strokeStyle = "white";
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
@@ -234,6 +233,7 @@ export class EraserTool extends Tool {
       selectedLayer.ctx.beginPath();
       selectedLayer.ctx.moveTo(mouseX, mouseY);
     };
+
     // event listeners
     document.addEventListener("mousedown", this.startErase);
 
@@ -527,7 +527,6 @@ export class ResizeTool extends Tool {
 
     this.resizeActive = (e) => {
       let mouseXY = mouseLocationGetter(e);
-      console.log(layer);
       layer.canvas.className = "";
       layer.resize(mouseDownVector, mouseXY.x, mouseXY.y);
     };
