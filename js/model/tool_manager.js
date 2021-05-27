@@ -5,6 +5,7 @@ import {
   SelectionTool,
   EyedropperTool,
   TextTool,
+  ResizeTool,
 } from "./tools.js";
 
 export class ToolManager {
@@ -19,6 +20,7 @@ export class ToolManager {
     this.selectionTool = this.pushTool(new SelectionTool());
     this.eyedropperTool = this.pushTool(new EyedropperTool());
     this.textTool = this.pushTool(new TextTool(this.addNewLayerCallback));
+    this.resizeTool = new ResizeTool();
 
     this.selectedTool = this.moveTool;
 

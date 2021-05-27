@@ -11,3 +11,5 @@ var layersList = document.querySelector("#layers-list");
 var toolbox = document.querySelector(".tools");
 
 var canvasElement = document.querySelector("canvas");
+
+var resizeButton = document.querySelector("#image-button-resize");

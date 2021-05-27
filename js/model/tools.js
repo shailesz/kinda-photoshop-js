@@ -449,7 +449,87 @@ export class EyedropperTool extends Tool {
     // artboard.addEventListener("mousemove", (e) => {
     //   console.log("hello");
     // });
+  }
+}
 
-    
+export class ResizeTool extends Tool {
+  constructor() {
+    super();
+  }
+
+  activate(layer) {
+    this.resize(layer);
+    layer.canvas.className = "resize";
+  }
+
+  deactivate(layer) {
+    // document.removeEventListener("mousedown", this.startResize);
+    console.log('deactivated');
+  }
+
+  resize(layer) {
+    let element = canvasDiv;
+    layer.className = "resize";
+
+    let canvasSize = {
+      width: layer.canvas.offsetWidth,
+      height: layer.canvas.offsetHeight,
+    };
+
+    let mouseDownVector = {
+      x: 0,
+      y: 0,
+    };
+
+    let isTouchingBorder = (x, y) => {
+      if (
+        (y >= 0 && y <= 10) ||
+        (y >= canvasSize.height - 10 && y <= canvasSize.height) ||
+        (x >= 0 && x <= 10) ||
+        (x >= canvasSize.width - 10 && x <= canvasSize.width)
+      ) {
+        return true;
+      }
+      return false;
+    };
+
+    let mouseLocationGetter = (e) => {
+      return {
+        x: e.clientX - element.getBoundingClientRect().left,
+        y: e.clientY - element.getBoundingClientRect().top,
+      };
+    };
+
+    this.startResize = async (e) => {
+      mouseDownVector = mouseLocationGetter(e);
+
+      if (isTouchingBorder(mouseDownVector.x, mouseDownVector.y)) {
+        document.addEventListener("mouseup", this.endResize);
+        document.addEventListener("mousemove", this.resizeActive);
+      }
+
+      layer.imageData = layer.ctx.getImageData(
+        0,
+        0,
+        canvasSize.width,
+        canvasSize.height
+      );
+
+      layer.bitmap = await createImageBitmap(layer.imageData);
+    };
+
+    this.endResize = (e) => {
+      document.removeEventListener("mouseup", this.endResize);
+      document.removeEventListener("mousemove", this.resizeActive);
+      document.removeEventListener("mousedown", this.startResize);
+    };
+
+    this.resizeActive = (e) => {
+      let mouseXY = mouseLocationGetter(e);
+      layer.canvas.className = "";
+      layer.resize(mouseDownVector, mouseXY.x, mouseXY.y);
+    };
+
+    document.addEventListener("mousedown", this.startResize);
   }
 }

@@ -3,7 +3,7 @@ import { ToolManager } from "./tool_manager.js";
 
 export class Photoshop {
   constructor() {
-    let toolCallback = (tool) => {
+    this.toolCallback = (tool) => {
       // deactivate previous tool
       this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
 
@@ -24,7 +24,7 @@ export class Photoshop {
 
     // creating layer manager and tool manager
     this.layerManager = new LayerManager();
-    this.toolManager = new ToolManager(toolCallback, this.addNewLayer);
+    this.toolManager = new ToolManager(this.toolCallback, this.addNewLayer);
 
     // add first layer an select it
     this.layerManager.addLayer(
@@ -34,21 +34,23 @@ export class Photoshop {
 
     // select a tool, this activates the tool
     this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
+    // this.toolManager.resizeTool.activate(this.layerManager.selectedLayer);
 
     this.uiButtons();
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
-      console.log('click garyo');
+      console.log("click garyo");
       this.addNewLayer();
       this.layerManager.listLayers();
-      console.log('click garyo');
+      console.log("click garyo");
     });
 
     // delete garne thau ho yo chai
     removeLayerButton.addEventListener("click", () => {
       // this.layerManager.removeLayer();
-      console.log(this.layerManager.selectedLayer);
+      // console.log(this.layerManager.selectedLayer);
+      this.toolCallback(this.toolManager.resizeTool);
     });
   }
 
@@ -70,14 +72,6 @@ export class Photoshop {
 
   uiButtons() {
     // ui ko components here
-
-    // file ko
-    var fileButton = document.querySelector("#file-button");
-    var newButton = document.querySelector("#file-button-dropdown-new");
-    var openInput = document.querySelector("#file-open-input");
-
-    // trying to open files
-
     let showDropdown = (selector) => {
       let dropdown = document.querySelector(selector);
 
@@ -88,54 +82,76 @@ export class Photoshop {
       }
     };
 
-    // dropdown for file
-    fileButton.addEventListener("click", () => {
-      showDropdown("#file-button-dropdown");
-    });
+    let openImage = () => {
+      // file ko
+      let fileButton = document.querySelector("#file-button");
+      let newButton = document.querySelector("#file-button-dropdown-new");
+      let openInput = document.querySelector("#file-open-input");
 
-    newButton.addEventListener("click", () => {});
+      // trying to open files
 
-    // openInput
-    openInput.addEventListener(
-      "change",
-      (e) => {
-        const reader = new FileReader();
+      // dropdown for file
+      fileButton.addEventListener("click", () => {
+        showDropdown("#file-button-dropdown");
+      });
 
-        reader.onload = () => {
-          console.log(reader.result);
-          image.src = reader.result;
-          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-          console.log(image.src);
-        };
-        reader.readAsDataURL(openInput.files[0]);
-        console.log(openInput.files[0]);
-      },
-      false
-    );
+      newButton.addEventListener("click", () => {});
 
-    // image ko
-    var imageButton = document.querySelector("#image-button");
-    var imageDropdown = document.querySelector("#image-button-dropdown");
-    var insertInput = document.querySelector("#image-insert-input");
+      // openInput
+      openInput.addEventListener(
+        "change",
+        (e) => {
+          const reader = new FileReader();
 
-    imageDropdown.style.left = imageButton.getBoundingClientRect().left + "px";
+          reader.onload = () => {
+            console.log(reader.result);
+            image.src = reader.result;
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            console.log(image.src);
+          };
+          reader.readAsDataURL(openInput.files[0]);
+          console.log(openInput.files[0]);
+        },
+        false
+      );
+    };
 
-    imageButton.addEventListener("click", () => {
-      showDropdown("#image-button-dropdown");
-    });
+    let insertImage = () => {
+      // image ko
+      let imageButton = document.querySelector("#image-button");
+      let imageDropdown = document.querySelector("#image-button-dropdown");
+      let insertInput = document.querySelector("#image-insert-input");
 
-    // insertInput
-    insertInput.addEventListener(
-      "change",
-      (e) => {
-        let reader = new FileReader();
+      imageDropdown.style.left =
+        imageButton.getBoundingClientRect().left + "px";
 
-        reader.onloadend = () => {
-          this.addNewLayer(reader.result);
-        };
-        reader.readAsDataURL(insertInput.files[0]);
-      },
-      false
-    );
+      imageButton.addEventListener("click", () => {
+        showDropdown("#image-button-dropdown");
+      });
+
+      // insertInput
+      insertInput.addEventListener(
+        "change",
+        (e) => {
+          let reader = new FileReader();
+
+          reader.onloadend = () => {
+            this.addNewLayer(reader.result);
+          };
+          reader.readAsDataURL(insertInput.files[0]);
+        },
+        false
+      );
+    };
+
+    let resizeImage = () => {
+      resizeButton.addEventListener("click", () => {
+        this.toolCallback(this.toolManager.resizeTool);
+      });
+    };
+
+    openImage();
+    insertImage();
+    resizeImage();
   }
 }

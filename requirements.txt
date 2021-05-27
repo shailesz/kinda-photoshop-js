@@ -22,8 +22,8 @@ Basic requirements:
         Hand tool 😭
 
     Basic image manipulation 😭
-        Rotate
         Resize
+        Rotate
 
     Export options
     

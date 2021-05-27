@@ -318,3 +318,8 @@ section {
 .text-box div {
     color: #000;
 }
+
+.resize{
+    box-sizing: border-box;
+    border: 5px solid black;
+}
