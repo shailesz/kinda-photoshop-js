@@ -174,6 +174,7 @@ export class EraserTool extends Tool {
 
   activate(layer) {
     this.eraser(layer);
+    console.log(layer);
   }
 
   deactivate(layer) {
@@ -469,12 +470,12 @@ export class ResizeTool extends Tool {
 
   resize(layer) {
     let element = canvasDiv;
-    layer.className = "resize";
 
     let canvasSize = {
       width: layer.canvas.offsetWidth,
       height: layer.canvas.offsetHeight,
     };
+
 
     let mouseDownVector = {
       x: 0,
@@ -526,6 +527,7 @@ export class ResizeTool extends Tool {
 
     this.resizeActive = (e) => {
       let mouseXY = mouseLocationGetter(e);
+      console.log(layer);
       layer.canvas.className = "";
       layer.resize(mouseDownVector, mouseXY.x, mouseXY.y);
     };

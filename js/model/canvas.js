@@ -74,6 +74,8 @@ export class Canvas {
       };
     } else {
       // create transparent canvas
+      this.canvas.width = startLayerWidth;
+      this.canvas.height = startLayerHeight;
       this.canvas.style.width = startLayerWidth + "px";
       this.canvas.style.height = startLayerHeight + "px";
       this.ctx.fillStyle = "transparent";

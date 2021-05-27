@@ -40,10 +40,8 @@ export class Photoshop {
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
-      console.log("click garyo");
-      this.addNewLayer();
-      this.layerManager.listLayers();
-      console.log("click garyo");
+      let oldLayer = this.addNewLayer();
+      this.addLayerCallback(oldLayer, this.layerManager.selectedLayer);
     });
 
     // delete garne thau ho yo chai
