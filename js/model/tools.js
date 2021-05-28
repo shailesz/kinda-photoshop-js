@@ -8,7 +8,7 @@ class Tool {
 export class MoveTool extends Tool {
   constructor() {
     super();
-    this.toolboxImgSrc = "./images/move.svg";
+    this.toolboxImgSrc = "./images/move.png";
     this.altText = "Move";
   }
 
@@ -70,7 +70,7 @@ export class BrushTool extends Tool {
   constructor() {
     super();
     this.isMouseInCanvas = false;
-    this.toolboxImgSrc = "./images/brush.svg";
+    this.toolboxImgSrc = "./images/brush.png";
     this.altText = "Brush";
     this.selectionDiv = null;
 
@@ -164,7 +164,7 @@ export class EraserTool extends Tool {
   constructor() {
     super();
     this.isMouseInCanvas = false;
-    this.toolboxImgSrc = "./images/eraser.svg";
+    this.toolboxImgSrc = "./images/eraser.png";
     this.altText = "Eraser";
     this.selectionDiv = null;
     this.flipIsMouseInCanvas = () => {
@@ -257,7 +257,7 @@ export class SelectionTool extends Tool {
   constructor() {
     super();
     this.isMouseInCanvas = false;
-    this.toolboxImgSrc = "./images/selection.svg";
+    this.toolboxImgSrc = "./images/selection.png";
     this.altText = "Selection";
     this.flipIsMouseInCanvas = () => {
       this.isMouseInCanvas = !this.isMouseInCanvas;
@@ -361,7 +361,7 @@ export class SelectionTool extends Tool {
 export class TextTool extends Tool {
   constructor(addNewLayerCallback) {
     super();
-    this.toolboxImgSrc = "./images/text.svg";
+    this.toolboxImgSrc = "./images/text.png";
     this.altText = "Text";
     this.addNewLayerCallback = addNewLayerCallback;
   }
@@ -437,7 +437,7 @@ export class TextTool extends Tool {
 export class EyedropperTool extends Tool {
   constructor() {
     super();
-    this.toolboxImgSrc = "./images/eyedropper.svg";
+    this.toolboxImgSrc = "./images/eyedropper.png";
     this.altText = "Eyedropper";
   }
 

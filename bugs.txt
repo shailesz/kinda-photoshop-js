@@ -2,9 +2,13 @@
     brush tool 
     eraser tool
 
-2. if (!this.isToolActive && !this.isMouseInCanvas) or hunu parne ho i put and 
+2. if (!this.isToolActive && !this.isMouseInCanvas) or hunu parne ho i put and ✅
     oops! haha
 
-3. chrome ma toolbox is broken, img haru broken
+3. chrome ma toolbox is broken, img haru broken ✅
 
 4. canvas div lai fixed height width and overflow clip or hidden
+
+5. portrait images seem to break
+
+6. text tool broken 

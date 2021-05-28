@@ -21,9 +21,9 @@ Basic requirements:
         Eyedropper tool
         Hand tool 😭
 
-    Basic image manipulation 🚀
+    Basic image manipulation ✅
         Resize ✅
-        Rotate
+        Rotate ✅
 
     Export options
     
