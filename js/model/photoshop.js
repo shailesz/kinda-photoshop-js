@@ -59,9 +59,7 @@ export class Photoshop {
 
     // delete garne thau ho yo chai
     removeLayerButton.addEventListener("click", () => {
-      // this.layerManager.removeLayer();
-      // console.log(this.layerManager.selectedLayer);
-
+      this.layerManager.removeLayer(this.layerManager.selectedLayer);
     });
 
     this.colorSelectorGradient();

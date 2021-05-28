@@ -67,8 +67,28 @@ export class LayerManager {
     this.count += 1;
   }
 
-  removeLayer() {
-    console.log("remove bhayo yo");
+  removeLayer(layer) {
+    let keys = Object.keys(this.myLayers);
+    if (keys.length <= 1) {
+      return;
+    }
+    for (let key of keys) {
+      if (this.myLayers[key] == layer) {
+        delete this.myLayers[key];
+        let selectedLayer = document.querySelector("#selected-layer");
+        selectedLayer.remove();
+
+        // refreshing array
+        keys = Object.keys(this.myLayers);
+        let newSelectedLayerKey = keys[keys.length - 1];
+        this.selectedLayer = this.myLayers[newSelectedLayerKey];
+
+        // selected layer effect
+        let newSelectedLayerElement = document.querySelector("#layers-list>li");
+        newSelectedLayerElement.id = "selected-layer";
+        return;
+      }
+    }
   }
 
   listLayers() {
