@@ -87,7 +87,7 @@ export class Photoshop {
 
   // ui ko components here
   uiButtons() {
-    let showDropdown = (selector) => {
+    let toggleDropdown = (selector) => {
       let dropdown = document.querySelector(selector);
 
       if (dropdown.className === "menu-option-dropdown lsn") {
@@ -100,17 +100,23 @@ export class Photoshop {
     // file ko
     let openImage = () => {
       let fileButton = document.querySelector("#file-button");
-      let newButton = document.querySelector("#file-button-dropdown-new");
       let openInput = document.querySelector("#file-open-input");
+      let dropDownVisible = false;
 
-      // trying to open files
+      let fileButtonDropdownToggle = () => {
+        toggleDropdown("#file-button-dropdown");
+        if (dropDownVisible) {
+          console.log("removed");
+          document.removeEventListener("mousedown", fileButtonDropdownToggle);
+        }
+        dropDownVisible = !dropDownVisible;
+      };
 
       // dropdown for file
       fileButton.addEventListener("click", () => {
-        showDropdown("#file-button-dropdown");
+        fileButtonDropdownToggle();
+        document.addEventListener("mousedown", fileButtonDropdownToggle);
       });
-
-      newButton.addEventListener("click", () => {});
 
       // openInput
       openInput.addEventListener(
@@ -129,17 +135,28 @@ export class Photoshop {
       );
     };
 
+    // image ko
     let insertImage = () => {
-      // image ko
       let imageButton = document.querySelector("#image-button");
       let imageDropdown = document.querySelector("#image-button-dropdown");
       let insertInput = document.querySelector("#image-insert-input");
+      let dropDownVisible = false;
 
       imageDropdown.style.left =
         imageButton.getBoundingClientRect().left + "px";
 
+      let imageBurronDropDownToggle = () => {
+        toggleDropdown("#image-button-dropdown");
+        if (dropDownVisible) {
+          console.log("removed image wala");
+          document.removeEventListener("mousedown", imageBurronDropDownToggle);
+        }
+        dropDownVisible = !dropDownVisible;
+      };
+
       imageButton.addEventListener("click", () => {
-        showDropdown("#image-button-dropdown");
+        imageBurronDropDownToggle();
+        document.addEventListener("mousedown", imageBurronDropDownToggle);
       });
 
       // insertInput
@@ -168,6 +185,7 @@ export class Photoshop {
     resizeImage();
   }
 
+  // generate and handle color selectors
   colorSelectorGradient() {
     let ctx = colorSelectorGradientCanvas.getContext("2d");
     let sliderCtx = colorSelectorGradientSliderCanvas.getContext("2d");
