@@ -10,8 +10,13 @@ export class Photoshop {
       // select new tool
       this.toolManager.selectTool(tool);
 
-      // activate new tool
-      this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
+      if (this.toolManager.selectedTool == this.toolManager.eyedropperTool) {
+        // activate eyedropper tool
+        this.toolManager.selectedTool.activate(this.layerManager.myLayers);
+      } else {
+        // activate new tool
+        this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
+      }
     };
 
     this.addLayerCallback = (previousLayer, selectedLayer) => {
@@ -55,6 +60,7 @@ export class Photoshop {
       // TODO: rotate tool
       // this.toolCallback(this.toolManager.rotateTool)
 
+      // TODO: export tool
       this.toolManager.ExportTool.export(this.layerManager.myLayers);
     });
   }

@@ -75,6 +75,7 @@ export class BrushTool extends Tool {
     this.toolboxImgSrc = "./images/brush.png";
     this.altText = "Brush";
     this.selectionDiv = null;
+    this.color = "rgba(255,255,255)";
 
     this.flipIsMouseInCanvas = () => {
       this.isMouseInCanvas = !this.isMouseInCanvas;
@@ -130,7 +131,7 @@ export class BrushTool extends Tool {
 
       // variables here
       selectedLayer.ctx.globalCompositeOperation = "source-over";
-      selectedLayer.ctx.strokeStyle = "yellow";
+      selectedLayer.ctx.strokeStyle = this.color;
       selectedLayer.ctx.lineWidth = 10;
       selectedLayer.ctx.lineCap = "round";
 
@@ -435,26 +436,6 @@ export class TextTool extends Tool {
   }
 }
 
-// TODO: this tool, make it fam
-export class EyedropperTool extends Tool {
-  constructor() {
-    super();
-    this.toolboxImgSrc = "./images/eyedropper.png";
-    this.altText = "Eyedropper";
-  }
-
-  eyedrop(artboard) {
-    // TODO: eyedropper functionality
-    // getimage and getpx methods hune raicha
-    // maybe combine all layers so that can accurately get the color of any layers that the mouse may hover
-    // aaru ma ta single layer linthiyo aba that wont work fam
-    // good luck :)
-    // artboard.addEventListener("mousemove", (e) => {
-    //   console.log("hello");
-    // });
-  }
-}
-
 export class ResizeTool {
   constructor() {}
 
@@ -617,7 +598,8 @@ export class ExportTool {
   deactivate() {
     console.log("deactivate call garyo");
   }
-  export(layers) {
+
+  static combineLayers(layers) {
     let keys = Object.keys(layers);
     let tempWidth = layers[keys[0]].calculatedWidth;
     let tempHeight = layers[keys[0]].calculatedHeight;
@@ -627,12 +609,64 @@ export class ExportTool {
       let tempImageData = layers[key].canvas;
       tempCanvas.ctx.drawImage(tempImageData, 0, 0);
     }
+    return tempCanvas;
+  }
 
+  export(layers) {
+    let tempCanvas = this.combineLayers(layers);
     let link = document.createElement("a");
     link.download = "image.png";
     link.href = tempCanvas.canvas
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
     link.click();
+  }
+}
+
+export class EyedropperTool extends Tool {
+  constructor(updatePrimaryColorCallback) {
+    super();
+    this.toolboxImgSrc = "./images/eyedropper.png";
+    this.altText = "Eyedropper";
+    this.updatePrimaryColorCallback = updatePrimaryColorCallback;
+  }
+
+  activate(layers) {
+    this.eyedrop(layers);
+  }
+  deactivate() {
+    this.endTool();
+  }
+
+  eyedrop(layers) {
+    let tempImage = ExportTool.combineLayers(layers);
+    let element = canvasDiv;
+
+    let mouseLocationGetter = (e) => {
+      return {
+        x: e.clientX - element.getBoundingClientRect().left,
+        y: e.clientY - element.getBoundingClientRect().top,
+      };
+    };
+
+    this.startTool = (e) => {
+      let mouseDownVector = mouseLocationGetter(e);
+      let pixelData = tempImage.ctx.getImageData(
+        mouseDownVector.x,
+        mouseDownVector.y,
+        1,
+        1
+      );
+
+      let color = `rgb(${pixelData.data[0]}, ${pixelData.data[1]}, ${pixelData.data[2]})`;
+      this.updatePrimaryColorCallback(color);
+      this.deactivate();
+    };
+
+    this.endTool = () => {
+      document.removeEventListener("mousedown", this.startTool);
+    };
+
+    document.addEventListener("mousedown", this.startTool);
   }
 }

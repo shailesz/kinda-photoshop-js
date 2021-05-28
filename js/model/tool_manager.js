@@ -15,12 +15,17 @@ export class ToolManager {
     this.myTools = [];
     this.callback = callback; // TODO: refactor this callback name
     this.addNewLayerCallback = addNewLayerCallback;
+    let updatePrimaryColorCallback = (color) => {
+      this.updatePrimaryColor(color);
+    };
 
     this.moveTool = this.pushTool(new MoveTool());
     this.brushTool = this.pushTool(new BrushTool());
     this.eraserTool = this.pushTool(new EraserTool());
     this.selectionTool = this.pushTool(new SelectionTool());
-    this.eyedropperTool = this.pushTool(new EyedropperTool());
+    this.eyedropperTool = this.pushTool(
+      new EyedropperTool(updatePrimaryColorCallback)
+    );
     this.textTool = this.pushTool(new TextTool(this.addNewLayerCallback));
     this.resizeTool = new ResizeTool();
     this.rotateTool = new RotateTool();
@@ -34,6 +39,11 @@ export class ToolManager {
   // change selected tool
   selectTool(tool) {
     this.selectedTool = tool;
+  }
+
+  updatePrimaryColor(color) {
+    this.brushTool.color = color;
+    console.log(this.brushTool.color);
   }
 
   /*
