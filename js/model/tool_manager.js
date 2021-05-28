@@ -6,6 +6,7 @@ import {
   EyedropperTool,
   TextTool,
   ResizeTool,
+  RotateTool,
 } from "./tools.js";
 
 export class ToolManager {
@@ -21,6 +22,7 @@ export class ToolManager {
     this.eyedropperTool = this.pushTool(new EyedropperTool());
     this.textTool = this.pushTool(new TextTool(this.addNewLayerCallback));
     this.resizeTool = new ResizeTool();
+    this.rotateTool = new RotateTool();
 
     this.selectedTool = this.moveTool;
 

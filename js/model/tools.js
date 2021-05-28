@@ -465,7 +465,7 @@ export class ResizeTool extends Tool {
 
   deactivate(layer) {
     // document.removeEventListener("mousedown", this.startResize);
-    console.log('deactivated');
+    console.log("deactivated");
   }
 
   resize(layer) {
@@ -475,7 +475,6 @@ export class ResizeTool extends Tool {
       width: layer.canvas.offsetWidth,
       height: layer.canvas.offsetHeight,
     };
-
 
     let mouseDownVector = {
       x: 0,
@@ -532,5 +531,82 @@ export class ResizeTool extends Tool {
     };
 
     document.addEventListener("mousedown", this.startResize);
+  }
+}
+
+export class RotateTool extends Tool {
+  constructor() {
+    super();
+  }
+
+  activate(layer) {
+    this.rotate(layer);
+  }
+  deactivate() {
+    console.log("deactivated fam");
+  }
+
+  rotate(layer) {
+    let element = canvasDiv;
+
+    let canvasSize = {
+      width: layer.canvas.offsetWidth,
+      height: layer.canvas.offsetHeight,
+    };
+
+    let mouseDownVector = {
+      x: 0,
+      y: 0,
+    };
+
+    let mouseLocationGetter = (e) => {
+      return {
+        x: e.clientX - element.getBoundingClientRect().left,
+        y: e.clientY - element.getBoundingClientRect().top,
+      };
+    };
+
+    let isTouchingBorder = (x, y) => {
+      if (
+        (y >= 0 && y <= 10) ||
+        (y >= canvasSize.height - 10 && y <= canvasSize.height) ||
+        (x >= 0 && x <= 10) ||
+        (x >= canvasSize.width - 10 && x <= canvasSize.width)
+      ) {
+        return true;
+      }
+      return false;
+    };
+
+    this.startRotate = async (e) => {
+      console.log("started");
+      mouseDownVector = mouseLocationGetter(e);
+
+      if (isTouchingBorder(mouseDownVector.x, mouseDownVector.y)) {
+        layer.imageData = layer.ctx.getImageData(
+          0,
+          0,
+          canvasSize.width,
+          canvasSize.height
+        );
+
+        layer.bitmap = await createImageBitmap(layer.imageData);
+
+        document.addEventListener("mouseup", this.endRotate);
+        document.addEventListener("mousemove", this.rotateActive);
+      }
+    };
+    this.endRotate = () => {
+      // document.removeEventListener("mousedown", this.startRotate);
+      document.removeEventListener("mouseup", this.endRotate);
+      document.removeEventListener("mousemove", this.rotateActive);
+    };
+    this.rotateActive = (e) => {
+      console.log("rotating");
+      let mouseXY = mouseLocationGetter(e);
+      layer.rotate(mouseDownVector, mouseXY.x, mouseXY.y);
+    };
+
+    document.addEventListener("mousedown", this.startRotate);
   }
 }

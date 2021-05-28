@@ -48,7 +48,11 @@ export class Photoshop {
     removeLayerButton.addEventListener("click", () => {
       // this.layerManager.removeLayer();
       // console.log(this.layerManager.selectedLayer);
-      this.toolCallback(this.toolManager.resizeTool);
+
+      // TODO: resize tool
+      // this.toolCallback(this.toolManager.resizeTool);
+
+      this.toolCallback(this.toolManager.rotateTool)
     });
   }
 

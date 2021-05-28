@@ -137,4 +137,36 @@ export class Canvas {
 
     resizeImage(this.bitmap);
   }
+
+  rotate(mouseDownVector, mouseX, mouseY) {
+    let canvasResolution = this.getCanvasResolution();
+
+    let rotateImage = (image) => {
+      let mouseDownLineSlope =
+        (canvasResolution[0] / 2 - mouseDownVector.x) /
+        (canvasResolution[1] / 2 - mouseDownVector.y);
+
+      let currentMouseLineSlope =
+        (canvasResolution[0] / 2 - mouseX) / (canvasResolution[1] / 2 - mouseY);
+
+      let m2 = mouseDownLineSlope;
+      let m1 = currentMouseLineSlope;
+
+      let tanTheta = (m2 - m1) / (1 + m1 * m2);
+      let angleInRadians = Math.atan(tanTheta);
+
+      this.ctx.save();
+      this.ctx.clearRect(0, 0, canvasResolution[0], canvasResolution[1]);
+      this.ctx.translate(canvasResolution[0] / 2, canvasResolution[1] / 2);
+      this.ctx.rotate(angleInRadians);
+      this.ctx.drawImage(
+        image,
+        -(canvasResolution[0] / 2),
+        -(canvasResolution[1] / 2)
+      );
+      this.ctx.restore();
+    };
+
+    rotateImage(this.bitmap);
+  }
 }
