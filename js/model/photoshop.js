@@ -63,6 +63,8 @@ export class Photoshop {
       // TODO: export tool
       this.toolManager.ExportTool.export(this.layerManager.myLayers);
     });
+
+    this.colorSelectorGradient();
   }
 
   // tool and layer activator
@@ -164,5 +166,135 @@ export class Photoshop {
     openImage();
     insertImage();
     resizeImage();
+  }
+
+  colorSelectorGradient() {
+    let ctx = colorSelectorGradientCanvas.getContext("2d");
+    let sliderCtx = colorSelectorGradientSliderCanvas.getContext("2d");
+    let colorSelectorGradientColor = this.toolManager.brushTool.color;
+    let mouseLocationGetter = (e, element) => {
+      return {
+        x: e.clientX - element.getBoundingClientRect().left,
+        y: e.clientY - element.getBoundingClientRect().top,
+      };
+    };
+    let updateGradient = () => {
+      ctx.clearRect(
+        0,
+        0,
+        colorSelectorGradientCanvas.width,
+        colorSelectorGradientCanvas.height
+      );
+      let gradient1 = ctx.createLinearGradient(
+        0,
+        0,
+        colorSelectorGradientCanvas.width,
+        colorSelectorGradientCanvas.height
+      );
+
+      let gradient2 = ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        colorSelectorGradientCanvas.height
+      );
+
+      primarySelectedColor.style.background = this.toolManager.brushTool.color;
+
+      gradient1.addColorStop(0, "white");
+      gradient1.addColorStop(1, colorSelectorGradientColor);
+      gradient2.addColorStop(0, "transparent");
+      gradient2.addColorStop(1, "black");
+
+      ctx.fillStyle = gradient1;
+      ctx.fillRect(
+        0,
+        0,
+        colorSelectorGradientCanvas.width,
+        colorSelectorGradientCanvas.height
+      );
+
+      ctx.fillStyle = gradient2;
+      ctx.fillRect(
+        0,
+        0,
+        colorSelectorGradientCanvas.width,
+        colorSelectorGradientCanvas.height
+      );
+      requestAnimationFrame(() => {
+        updateGradient();
+      });
+    };
+
+    let updateGradientSlider = () => {
+      sliderCtx.clearRect(
+        0,
+        0,
+        colorSelectorGradientSliderCanvas.width,
+        colorSelectorGradientSliderCanvas.height
+      );
+      let gradient = sliderCtx.createLinearGradient(
+        0,
+        0,
+        colorSelectorGradientSliderCanvas.width,
+        colorSelectorGradientSliderCanvas.height
+      );
+
+      gradient.addColorStop(0, "red");
+      gradient.addColorStop(1 / 6, "orange");
+      gradient.addColorStop(2 / 6, "yellow");
+      gradient.addColorStop(3 / 6, "green");
+      gradient.addColorStop(4 / 6, "blue");
+      gradient.addColorStop(5 / 6, "Indigo");
+      gradient.addColorStop(1, "violet");
+
+      sliderCtx.fillStyle = gradient;
+      sliderCtx.fillRect(
+        0,
+        0,
+        colorSelectorGradientSliderCanvas.width,
+        colorSelectorGradientSliderCanvas.height
+      );
+    };
+
+    let updateColor = (e, canvas) => {
+      let mouseDownVector = mouseLocationGetter(e, canvas);
+      let ctx = canvas.getContext("2d");
+      let pixelData = ctx.getImageData(
+        mouseDownVector.x,
+        mouseDownVector.y,
+        1,
+        1
+      );
+
+      let color = `rgb(${pixelData.data[0]}, ${pixelData.data[1]}, ${pixelData.data[2]})`;
+      if (canvas === colorSelectorGradientSliderCanvas) {
+        colorSelectorGradientColor = color;
+      } else if (canvas === colorSelectorGradientCanvas) {
+        this.toolManager.updatePrimaryColor(color);
+      }
+    };
+
+    // selector height/width
+    colorSelectorGradientCanvas.height =
+      colorSelectorGradientCanvas.offsetHeight;
+    colorSelectorGradientCanvas.width = colorSelectorGradientCanvas.offsetWidth;
+
+    // slider height/width
+    colorSelectorGradientSliderCanvas.height =
+      colorSelectorGradientSliderCanvas.offsetHeight;
+    colorSelectorGradientSliderCanvas.width =
+      colorSelectorGradientSliderCanvas.offsetWidth;
+
+    colorSelectorGradientCanvas.addEventListener("mousedown", (e) => {
+      updateColor(e, colorSelectorGradientCanvas);
+    });
+
+    colorSelectorGradientSliderCanvas.addEventListener("mousedown", (e) => {
+      updateColor(e, colorSelectorGradientSliderCanvas);
+    });
+
+    updateGradient();
+    updateGradientSlider();
   }
 }
