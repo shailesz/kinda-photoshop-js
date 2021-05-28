@@ -299,6 +299,7 @@ export class SelectionTool extends Tool {
         this.selectionDiv = document.createElement("div");
         this.selectionDiv.id = "selection";
         canvasDiv.appendChild(this.selectionDiv);
+        
       } else {
         this.selectionDiv.style.width = "0px";
         this.selectionDiv.style.height = "0px";
@@ -316,6 +317,15 @@ export class SelectionTool extends Tool {
     // mouse uthayo
     this.endSelection = (e) => {
       this.isToolActive = false;
+
+      let removeElementCallback = (e) => {
+        if (e.key === "Escape") {
+          this.selectionDiv.remove();
+          document.removeEventListener("keydown", removeElementCallback);
+        }
+      };
+
+      document.addEventListener("keydown", removeElementCallback);
 
       document.removeEventListener("mouseup", this.endSelection);
       document.removeEventListener("mousemove", this.selection);
@@ -395,6 +405,7 @@ export class TextTool extends Tool {
       element.style.left = e.offsetX + "px";
 
       canvasDiv.appendChild(element);
+
       element = document.querySelector(".text-box");
 
       // autofocus and select the text-box
@@ -443,8 +454,7 @@ export class ResizeTool {
     layer.canvas.className = "resize";
   }
 
-  deactivate() {
-  }
+  deactivate() {}
 
   resize(layer) {
     let element = canvasDiv;
@@ -518,8 +528,7 @@ export class RotateTool {
   activate(layer) {
     this.rotate(layer);
   }
-  deactivate() {
-  }
+  deactivate() {}
 
   rotate(layer) {
     let element = canvasDiv;
@@ -586,10 +595,8 @@ export class RotateTool {
 
 export class ExportTool {
   constructor() {}
-  activate() {
-  }
-  deactivate() {
-  }
+  activate() {}
+  deactivate() {}
 
   static combineLayers(layers) {
     let keys = Object.keys(layers);
