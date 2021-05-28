@@ -3,6 +3,11 @@ import { ToolManager } from "./tool_manager.js";
 
 export class Photoshop {
   constructor() {
+    this.layerManager = null;
+    this.uiButtons();
+  }
+
+  setup(image) {
     this.toolCallback = (tool) => {
       // deactivate previous tool
       this.toolManager.selectedTool.deactivate(this.layerManager.selectedLayer);
@@ -27,13 +32,15 @@ export class Photoshop {
       this.toolManager.selectedTool.activate(selectedLayer);
     };
 
-    this.uiButtons();
-  }
+    let textToolCallback = (layer) => {
+      this.layerManager.addLayer(layer, this.addLayerCallback);
 
-  setup(image) {
+      return this.layerManager.selectedLayer;
+    };
+
     // creating layer manager and tool manager
     this.layerManager = new LayerManager(image);
-    this.toolManager = new ToolManager(this.toolCallback, this.addNewLayer);
+    this.toolManager = new ToolManager(this.toolCallback, textToolCallback);
 
     // add first layer an select it
     this.layerManager.addLayer(
@@ -43,7 +50,6 @@ export class Photoshop {
 
     // select a tool, this activates the tool
     this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
-    // this.toolManager.resizeTool.activate(this.layerManager.selectedLayer);
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
@@ -56,14 +62,6 @@ export class Photoshop {
       // this.layerManager.removeLayer();
       // console.log(this.layerManager.selectedLayer);
 
-      // TODO: resize tool
-      // this.toolCallback(this.toolManager.resizeTool);
-
-      // TODO: rotate tool
-      // this.toolCallback(this.toolManager.rotateTool)
-
-      // TODO: export tool
-      this.toolManager.ExportTool.export(this.layerManager.myLayers);
     });
 
     this.colorSelectorGradient();
@@ -87,6 +85,7 @@ export class Photoshop {
 
   // ui ko components here
   uiButtons() {
+    // toggle dropdown handler
     let toggleDropdown = (selector) => {
       let dropdown = document.querySelector(selector);
 
@@ -97,23 +96,29 @@ export class Photoshop {
       }
     };
 
-    // file ko
-    let openImage = () => {
+    // file button handler
+    let fileButton = () => {
       let fileButton = document.querySelector("#file-button");
       let openInput = document.querySelector("#file-open-input");
       let dropDownVisible = false;
 
-      let fileButtonDropdownToggle = () => {
-        toggleDropdown("#file-button-dropdown");
+      let fileButtonDropdownToggle = (e) => {
         if (dropDownVisible) {
-          console.log("removed");
+          if (
+            e.target.parentElement.id === "file-button-dropdown" ||
+            e.target.parentElement.id === "file-button-dropdown-open"
+          ) {
+            return;
+          }
           document.removeEventListener("mousedown", fileButtonDropdownToggle);
         }
+
+        toggleDropdown("#file-button-dropdown");
         dropDownVisible = !dropDownVisible;
       };
 
       // dropdown for file
-      fileButton.addEventListener("click", () => {
+      fileButton.addEventListener("click", (e) => {
         fileButtonDropdownToggle();
         document.addEventListener("mousedown", fileButtonDropdownToggle);
       });
@@ -125,7 +130,6 @@ export class Photoshop {
           const reader = new FileReader();
 
           reader.onload = () => {
-            console.log(reader.result);
             this.setup(reader.result);
           };
           reader.readAsDataURL(openInput.files[0]);
@@ -135,8 +139,8 @@ export class Photoshop {
       );
     };
 
-    // image ko
-    let insertImage = () => {
+    // insert button handler
+    let insertButton = () => {
       let imageButton = document.querySelector("#image-button");
       let imageDropdown = document.querySelector("#image-button-dropdown");
       let insertInput = document.querySelector("#image-insert-input");
@@ -145,21 +149,27 @@ export class Photoshop {
       imageDropdown.style.left =
         imageButton.getBoundingClientRect().left + "px";
 
-      let imageBurronDropDownToggle = () => {
-        toggleDropdown("#image-button-dropdown");
+      let imageButtonDropDownToggle = (e) => {
         if (dropDownVisible) {
-          console.log("removed image wala");
-          document.removeEventListener("mousedown", imageBurronDropDownToggle);
+          if (
+            e.target.id === "image-button-rotate" ||
+            e.target.id === "image-button-resize" ||
+            e.target.parentElement.id === "image-button-dropdown-insert"
+          ) {
+            return;
+          }
+          document.removeEventListener("mousedown", imageButtonDropDownToggle);
         }
+        toggleDropdown("#image-button-dropdown");
         dropDownVisible = !dropDownVisible;
       };
 
       imageButton.addEventListener("click", () => {
-        imageBurronDropDownToggle();
-        document.addEventListener("mousedown", imageBurronDropDownToggle);
+        imageButtonDropDownToggle();
+        document.addEventListener("mousedown", imageButtonDropDownToggle);
       });
 
-      // insertInput
+      // insert image handler
       insertInput.addEventListener(
         "change",
         (e) => {
@@ -174,15 +184,30 @@ export class Photoshop {
       );
     };
 
+    // resize image handler
     let resizeImage = () => {
       resizeButton.addEventListener("click", () => {
         this.toolCallback(this.toolManager.resizeTool);
       });
     };
 
-    openImage();
-    insertImage();
+    let rotateImage = () => {
+      rotateButton.addEventListener("click", () => {
+        this.toolCallback(this.toolManager.rotateTool);
+      });
+    };
+
+    let saveImage = () => {
+      saveButton.addEventListener("click", () => {
+        this.toolManager.ExportTool.export(this.layerManager.myLayers);
+      });
+    };
+
+    fileButton();
+    insertButton();
     resizeImage();
+    rotateImage();
+    saveImage();
   }
 
   // generate and handle color selectors

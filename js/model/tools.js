@@ -387,6 +387,7 @@ export class TextTool extends Tool {
         x: e.offsetX,
         y: e.offsetY,
       };
+
       // setup text-box
       var element = document.createElement("div");
       element.className = "text-box";
@@ -404,7 +405,7 @@ export class TextTool extends Tool {
         window.getSelection().selectAllChildren(element);
       }, 0);
 
-      document.removeEventListener("mousedown", this.startText);
+      // document.removeEventListener("mousedown", this.startText);
 
       element.addEventListener("keydown", (keydownEvent) => {
         if (keydownEvent.key === "Enter") {
@@ -613,7 +614,7 @@ export class ExportTool {
   }
 
   export(layers) {
-    let tempCanvas = this.combineLayers(layers);
+    let tempCanvas = ExportTool.combineLayers(layers);
     let link = document.createElement("a");
     link.download = "image.png";
     link.href = tempCanvas.canvas

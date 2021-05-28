@@ -11,8 +11,6 @@ var toolbox = document.querySelector(".tools");
 
 var canvasElement = document.querySelector("canvas");
 
-var resizeButton = document.querySelector("#image-button-resize");
-
 var colorSelectorGradientCanvas = document.querySelector(
   "#color-selector-gradient"
 );
@@ -21,4 +19,6 @@ var colorSelectorGradientSliderCanvas = document.querySelector(
   ".color-selector-slider"
 );
 
-console.log(colorSelectorGradientSliderCanvas);
+var saveButton = document.querySelector("#save-image");
+var resizeButton = document.querySelector("#image-button-resize");
+var rotateButton = document.querySelector("#image-button-rotate");

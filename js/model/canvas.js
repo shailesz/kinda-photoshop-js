@@ -54,14 +54,12 @@ export class Canvas {
         this.canvas.style.width = this.calculatedWidth + "px";
         this.canvas.style.height = this.calculatedHeight + "px";
 
-        // TODO: yeslai photoshop.js bata handle garne only once when creating first layer
-        // setting canvas-div ko widthharu
+        // setting canvas-div resolution
         if (!isEmptyLayer) {
           canvasDiv.setAttribute(
             "style",
             `height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`
           );
-          // console.log(`height: ${this.calculatedHeight}px; width: ${this.calculatedWidth}px;`);
         }
 
         // draw image on canvas
