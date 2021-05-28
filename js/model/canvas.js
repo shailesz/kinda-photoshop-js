@@ -36,8 +36,8 @@ export class Canvas {
       // setting onload for image of this object
       this.image.onload = () => {
         // taking image ko height width
-        var imageWidth = this.image.width;
-        var imageHeight = this.image.height;
+        let imageWidth = this.image.width;
+        let imageHeight = this.image.height;
 
         // finding ratio
         this.imageRatio = imageWidth / imageHeight;

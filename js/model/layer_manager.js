@@ -91,10 +91,4 @@ export class LayerManager {
     }
   }
 
-  listLayers() {
-    for (let i = 0; i < Object.keys(this.myLayers).length; i++) {
-      let layer = this.myLayers[i];
-      console.log(layer);
-    }
-  }
 }

@@ -43,7 +43,6 @@ export class ToolManager {
 
   updatePrimaryColor(color) {
     this.brushTool.color = color;
-    console.log(this.brushTool.color);
   }
 
   /*
@@ -62,9 +61,9 @@ export class ToolManager {
    */
   generateTool(tool) {
     // creating li for tool
-    var newTool = document.createElement("li");
+    let newTool = document.createElement("li");
     // creating img for tool
-    var newIcon = document.createElement("img");
+    let newIcon = document.createElement("img");
     newIcon.classList.add(tool.class);
     newIcon.src = tool.toolboxImgSrc;
     newIcon.alt = tool.altText;

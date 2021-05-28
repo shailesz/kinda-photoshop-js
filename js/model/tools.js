@@ -23,8 +23,8 @@ export class MoveTool extends Tool {
   }
 
   move(selectedLayer) {
-    var x = 0;
-    var y = 0;
+    let x = 0;
+    let y = 0;
 
     this.startMove = (e) => {
       this.isToolActive = true;
@@ -49,8 +49,8 @@ export class MoveTool extends Tool {
         return;
       }
       // mouse kati move bhayo
-      var dx = e.clientX - x;
-      var dy = e.clientY - y;
+      let dx = e.clientX - x;
+      let dy = e.clientY - y;
 
       // reposition
       selectedLayer.canvas.style.top =
@@ -278,7 +278,7 @@ export class SelectionTool extends Tool {
   }
 
   select(selectedLayer) {
-    var element = document.querySelector(".canvas");
+    let element = document.querySelector(".canvas");
     this.mouseDownVector = {
       // mouse start
       x: 0,
@@ -370,11 +370,9 @@ export class TextTool extends Tool {
   }
 
   activate(layer) {
-    console.log("text tool active");
     this.addText(layer);
   }
   deactivate() {
-    console.log("texttool deactive");
     document.removeEventListener("mousedown", this.startText);
     canvasDiv.removeEventListener("mouseenter", this.flipIsMouseInCanvas);
 
@@ -389,7 +387,7 @@ export class TextTool extends Tool {
       };
 
       // setup text-box
-      var element = document.createElement("div");
+      let element = document.createElement("div");
       element.className = "text-box";
       element.innerText = "Lorem";
       element.contentEditable = true;
@@ -445,9 +443,7 @@ export class ResizeTool {
     layer.canvas.className = "resize";
   }
 
-  deactivate(layer) {
-    // document.removeEventListener("mousedown", this.startResize);
-    console.log("deactivated");
+  deactivate() {
   }
 
   resize(layer) {
@@ -523,7 +519,6 @@ export class RotateTool {
     this.rotate(layer);
   }
   deactivate() {
-    console.log("deactivated fam");
   }
 
   rotate(layer) {
@@ -559,7 +554,6 @@ export class RotateTool {
     };
 
     this.startRotate = async (e) => {
-      console.log("started");
       mouseDownVector = mouseLocationGetter(e);
 
       if (isTouchingBorder(mouseDownVector.x, mouseDownVector.y)) {
@@ -582,7 +576,6 @@ export class RotateTool {
       document.removeEventListener("mousemove", this.rotateActive);
     };
     this.rotateActive = (e) => {
-      console.log("rotating");
       let mouseXY = mouseLocationGetter(e);
       layer.rotate(mouseDownVector, mouseXY.x, mouseXY.y);
     };
@@ -594,10 +587,8 @@ export class RotateTool {
 export class ExportTool {
   constructor() {}
   activate() {
-    console.log("activate call bhayo");
   }
   deactivate() {
-    console.log("deactivate call garyo");
   }
 
   static combineLayers(layers) {

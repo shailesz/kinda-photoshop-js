@@ -131,7 +131,6 @@ export class Photoshop {
             this.setup(reader.result);
           };
           reader.readAsDataURL(openInput.files[0]);
-          console.log(openInput.files[0]);
         },
         false
       );

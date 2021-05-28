@@ -4,6 +4,9 @@ section {
     height: calc(100% - 27.5px);
 }
 
+a{
+    text-decoration: none;
+}
 
 .program-name-container {
     padding: 5px 10px;
