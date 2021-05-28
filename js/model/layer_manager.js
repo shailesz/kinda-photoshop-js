@@ -74,6 +74,8 @@ export class LayerManager {
     }
     for (let key of keys) {
       if (this.myLayers[key] == layer) {
+        this.myLayers[key].canvas.remove();
+
         delete this.myLayers[key];
         let selectedLayer = document.querySelector("#selected-layer");
         selectedLayer.remove();
@@ -86,9 +88,9 @@ export class LayerManager {
         // selected layer effect
         let newSelectedLayerElement = document.querySelector("#layers-list>li");
         newSelectedLayerElement.id = "selected-layer";
+
         return;
       }
     }
   }
-
 }
