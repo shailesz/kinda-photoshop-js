@@ -19,9 +19,9 @@ export class ToolManager {
       this.updatePrimaryColor(color);
     };
 
-    this.moveTool = this.pushTool(new MoveTool());
     this.brushTool = this.pushTool(new BrushTool());
     this.eraserTool = this.pushTool(new EraserTool());
+    this.moveTool = this.pushTool(new MoveTool());
     this.selectionTool = this.pushTool(new SelectionTool());
     this.eyedropperTool = this.pushTool(
       new EyedropperTool(updatePrimaryColorCallback)
@@ -31,7 +31,7 @@ export class ToolManager {
     this.rotateTool = new RotateTool();
     this.ExportTool = new ExportTool();
 
-    this.selectedTool = this.moveTool;
+    this.selectedTool = this.brushTool;
 
     this.generateToolBox();
   }
