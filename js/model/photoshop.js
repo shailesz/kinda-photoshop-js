@@ -52,7 +52,10 @@ export class Photoshop {
       // TODO: resize tool
       // this.toolCallback(this.toolManager.resizeTool);
 
-      this.toolCallback(this.toolManager.rotateTool)
+      // TODO: rotate tool
+      // this.toolCallback(this.toolManager.rotateTool)
+
+      this.toolManager.ExportTool.export(this.layerManager.myLayers);
     });
   }
 

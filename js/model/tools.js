@@ -1,3 +1,5 @@
+import { Canvas } from "./canvas.js";
+
 class Tool {
   constructor() {
     this.class = "tools-icon";
@@ -453,10 +455,8 @@ export class EyedropperTool extends Tool {
   }
 }
 
-export class ResizeTool extends Tool {
-  constructor() {
-    super();
-  }
+export class ResizeTool {
+  constructor() {}
 
   activate(layer) {
     this.resize(layer);
@@ -534,10 +534,8 @@ export class ResizeTool extends Tool {
   }
 }
 
-export class RotateTool extends Tool {
-  constructor() {
-    super();
-  }
+export class RotateTool {
+  constructor() {}
 
   activate(layer) {
     this.rotate(layer);
@@ -608,5 +606,33 @@ export class RotateTool extends Tool {
     };
 
     document.addEventListener("mousedown", this.startRotate);
+  }
+}
+
+export class ExportTool {
+  constructor() {}
+  activate() {
+    console.log("activate call bhayo");
+  }
+  deactivate() {
+    console.log("deactivate call garyo");
+  }
+  export(layers) {
+    let keys = Object.keys(layers);
+    let tempWidth = layers[keys[0]].calculatedWidth;
+    let tempHeight = layers[keys[0]].calculatedHeight;
+    let tempCanvas = new Canvas(null, true, tempWidth, tempHeight, true);
+
+    for (const key of keys) {
+      let tempImageData = layers[key].canvas;
+      tempCanvas.ctx.drawImage(tempImageData, 0, 0);
+    }
+
+    let link = document.createElement("a");
+    link.download = "image.png";
+    link.href = tempCanvas.canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    link.click();
   }
 }

@@ -7,6 +7,7 @@ import {
   TextTool,
   ResizeTool,
   RotateTool,
+  ExportTool,
 } from "./tools.js";
 
 export class ToolManager {
@@ -23,6 +24,7 @@ export class ToolManager {
     this.textTool = this.pushTool(new TextTool(this.addNewLayerCallback));
     this.resizeTool = new ResizeTool();
     this.rotateTool = new RotateTool();
+    this.ExportTool = new ExportTool();
 
     this.selectedTool = this.moveTool;
 
