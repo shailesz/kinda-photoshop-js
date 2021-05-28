@@ -1,4 +1,4 @@
-1. image resolution mileko chaina sooo image kateko cha bot and right ma
+1. image resolution mileko chaina sooo image kateko cha bot and right ma ✅
 
 2. refactor tools.js, kinda jumbled rn
     check what can be extended from Tool
@@ -12,4 +12,6 @@
 
 5. fix color selector ko design, layer can be small 
 
-6. add png images instead of svg
+6. add png images instead of svg ✅
+
+7. file le open garnu parcha image lai, dont keep it open

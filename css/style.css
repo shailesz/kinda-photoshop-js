@@ -119,6 +119,10 @@ section {
     box-shadow: 0px 0px 1px #141414;
 }
 
+.tools>li:hover {
+    background: #5d5d5d;
+}
+
 #selected-tool {
     background: #ADADAD;
 }
@@ -281,8 +285,12 @@ section {
     border-radius: 50%;
 }
 
+#layers-list>li:hover {
+    background: #858585;
+}
+
 #selected-layer {
-    background: #adadad;
+    background: #858585;
 }
 
 .controls-container {
@@ -299,9 +307,13 @@ section {
 .controls-container>ul>li {
     display: inline-block;
     margin: 0 auto;
+    padding: 10px 0;
     text-align: center;
-    line-height: 35px;
     width: calc(50% - 2px);
+}
+
+.controls-container>ul>li:hover {
+    background: #5d5d5d;
 }
 
 #selection {
@@ -319,7 +331,7 @@ section {
     color: #000;
 }
 
-.resize{
+.resize {
     box-sizing: border-box;
     border: 5px solid black;
 }
