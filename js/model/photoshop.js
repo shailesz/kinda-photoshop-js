@@ -27,8 +27,12 @@ export class Photoshop {
       this.toolManager.selectedTool.activate(selectedLayer);
     };
 
+    this.uiButtons();
+  }
+
+  setup(image) {
     // creating layer manager and tool manager
-    this.layerManager = new LayerManager();
+    this.layerManager = new LayerManager(image);
     this.toolManager = new ToolManager(this.toolCallback, this.addNewLayer);
 
     // add first layer an select it
@@ -40,8 +44,6 @@ export class Photoshop {
     // select a tool, this activates the tool
     this.toolManager.selectedTool.activate(this.layerManager.selectedLayer);
     // this.toolManager.resizeTool.activate(this.layerManager.selectedLayer);
-
-    this.uiButtons();
 
     // naya layer add garne thau ho yo chai
     addLayerButton.addEventListener("click", () => {
@@ -83,8 +85,8 @@ export class Photoshop {
     return this.layerManager.selectedLayer;
   }
 
+  // ui ko components here
   uiButtons() {
-    // ui ko components here
     let showDropdown = (selector) => {
       let dropdown = document.querySelector(selector);
 
@@ -95,8 +97,8 @@ export class Photoshop {
       }
     };
 
+    // file ko
     let openImage = () => {
-      // file ko
       let fileButton = document.querySelector("#file-button");
       let newButton = document.querySelector("#file-button-dropdown-new");
       let openInput = document.querySelector("#file-open-input");
@@ -118,9 +120,7 @@ export class Photoshop {
 
           reader.onload = () => {
             console.log(reader.result);
-            image.src = reader.result;
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-            console.log(image.src);
+            this.setup(reader.result);
           };
           reader.readAsDataURL(openInput.files[0]);
           console.log(openInput.files[0]);

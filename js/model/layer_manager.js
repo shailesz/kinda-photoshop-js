@@ -4,10 +4,10 @@ import { Canvas } from "./canvas.js";
  *
  */
 export class LayerManager {
-  constructor() {
+  constructor(image) {
     this.myLayers = {};
     this.count = 0;
-    this.backgroundLayer = "./images/2.png";
+    this.backgroundLayer = image;
     this.selectedLayer = null;
     this.artboardWidth = null;
     this.artboardHeight = null;
